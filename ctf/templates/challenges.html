@@ -1,65 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="px-36 py-10 grid grid-flow-row grid-cols-5 gap-4">
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+<div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
+    <div onclick="displayModal('modal1')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
+        <h1 class="font-bold"> title </h1>
+        <h2 class="font-medium"> 50 </h2>
+        <div class="text-sm">
+            <button class="rounded-full bg-green-300 px-4 m-1" >Stegano</button>
+            <button class="rounded-full bg-red-300 px-4 m-1" >Pwn</button>
+            <button class="rounded-full bg-blue-300 px-4 m-1" >Crypto</button>
+        </div>
+    </div>
+    <div onclick="displayModal('modal2')" class="text-center bg-green-400 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
-        <h1 class="font-bold"> title </h1>
-        <h2 class="font-medium"> 50 </h2>
-    </div>
-    <div onclick="vive_print('lol');" class="text-center bg-gray-100 border-4 rounded-xl border-purple-500 p-4 hover:bg-purple-400">
+    <div onclick="displayModal('lol')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
         <h2 class="font-medium"> 50 </h2>
     </div>
 </div>
-
-<div class="hidden fixed top-0 bg-black bg-opacity-70 w-full h-full justify-center" id="modal">
-    <div class="text-center bg-white border-3 rounded-xl border-green-500 p-4 absolute top-1/4 w-1/4">
-        <h1 class="font-bold"> title </h1>
+<iframe width="50%" height="100%" src="https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
+<div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full justify-center" id="modal1" style="top:64px;">
+    <div class="text-center bg-white border-3 rounded-xl border-green-500 p-4 absolute top-1/4 w-1/2">
+        <h1 class="font-bold"> title 1 </h1>
         <h2 class="font-medium"> 50 </h2>
         <p class="text-center text-sm"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras magna est, ultricies
             sit amet justo id, laoreet consequat tellus. Phasellus iaculis erat erat, non vestibulum tellus auctor eu.
             Pellentesque pharetra aliquam turpis a egestas. Phasellus vulputate accumsan tellus, ac vulputate nunc rhoncus
             eget. Pellentesque in mauris nec quam auctor aliquet eget ac purus </p> <br>
-        <button id="myBtn" class="px-6 py-3 text-white font-semibold bg-green-700 rounded-md"> Validate </button>
+        <button onclick="modalclose('modal1')" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Validate </button>
+    </div>
+</div>
+<div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full justify-center" id="modal2" style="top:64px;">
+    <div class="text-center bg-white border-3 rounded-xl border-green-500 p-4 absolute top-1/4 w-1/2">
+        <h1 class="font-bold"> title 2 </h1>
+        <h2 class="font-medium"> 50 </h2>
+        <p class="text-center text-sm"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras magna est, ultricies
+            sit amet justo id, laoreet consequat tellus. Phasellus iaculis erat erat, non vestibulum tellus auctor eu.
+            Pellentesque pharetra aliquam turpis a egestas. Phasellus vulputate accumsan tellus, ac vulputate nunc rhoncus
+            eget. Pellentesque in mauris nec quam auctor aliquet eget ac purus </p> <br>
+        <button onclick="modalclose('modal2')" class="px-6 py-3 text-white font-semibold bg-blue-700 active:bg-blue-900 rounded-md"> Validate </button>
     </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <script>
-    function vive_print(print) {
-        var modal = document.getElementById("modal");
+    function displayModal(modal) {
+        var modal = document.getElementById(modal);
         modal.style.display = "flex";
+        var frame = document.getElementById("LePad");
+        frame.src = "https://hackmd.teamna.me/xtKpQWGfRG6qw8GR6WqkbQ#";
     };
 
-    var btn = document.getElementById("myBtn");
-    btn.onclick = function close() {
-        var modal = document.getElementById("modal");
+    function modalclose(modal) {
+        console.log('Yolo');
+        var modal = document.getElementById(modal);
         modal.style.display = "none";
+        var frame = document.getElementById("LePad");
+        frame.src = "https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA#";
     };
 </script>
 {% endblock %}

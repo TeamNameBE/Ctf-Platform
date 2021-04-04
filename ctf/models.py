@@ -21,6 +21,7 @@ class Ctf(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     website = models.TextField()
+    pad = models.TextField()
 
 
 class Challenges(models.Model):
@@ -31,3 +32,4 @@ class Challenges(models.Model):
     ctf = models.ForeignKey(Ctf, on_delete=models.CASCADE)
     validate = models.BooleanField()
     user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
+    pad = models.TextField()
