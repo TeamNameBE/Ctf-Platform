@@ -1,6 +1,8 @@
 // This is a minimal config.
 // If you need the full config, get it from here:
 // https://unpkg.com/browse/tailwindcss@latest/stubs/defaultConfig.stub.js
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     purge: [
         // Templates within theme app (e.g. base.html)
@@ -15,10 +17,18 @@ module.exports = {
             sans: ['Graphik', 'sans-serif'],
             serif: ['Merriweather', 'serif'],
         },
-        extend: {},
+        extend: {
+            colors: {
+                green: colors.green,
+                blue: colors.lightBlue,
+                gray: colors.gray,
+            },
+        },
     },
     variants: {
-        extend: {},
+        extend: {
+            backgroundColor: ['active'],
+        }
     },
     plugins: [
         require('@tailwindcss/typography'),
