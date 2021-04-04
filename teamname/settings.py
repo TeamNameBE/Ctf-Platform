@@ -21,8 +21,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "ctf",
-    "tailwind",
     "theme",
+    "tailwind",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +41,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "TeamName.urls"
+ROOT_URLCONF = "teamname.urls"
 
 TEMPLATES = [
     {
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "TeamName.wsgi.application"
+WSGI_APPLICATION = "teamname.wsgi.application"
 
 
 # Database
