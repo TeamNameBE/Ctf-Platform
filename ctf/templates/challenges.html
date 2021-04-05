@@ -63,9 +63,7 @@
         <button onclick="modalclose('modal2')" class="px-6 py-3 text-white font-semibold bg-blue-700 active:bg-blue-900 rounded-md"> Validate </button>
     </div>
 </div>
-{% endblock %}
 
-{% block script %}
 <script>
     function displayModal(modal) {
         var modal = document.getElementById(modal);
@@ -75,7 +73,6 @@
     };
 
     function modalclose(modal) {
-        console.log('Yolo');
         var modal = document.getElementById(modal);
         modal.style.display = "none";
         var frame = document.getElementById("LePad");
