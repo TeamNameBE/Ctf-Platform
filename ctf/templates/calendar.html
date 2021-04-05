@@ -1,22 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<!-- TODO DJANGOifier tout se bordel-->
+{% extends 'base.html' %}
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Tailwind CSS Skeleton</title>
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
-
-	<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-</head>
-<body class="antialiased sans-serif bg-gray-100">
-	<!-- component -->
-<!-- This is an example component -->
+{% block content%}
 <div>
 
 	<link rel="dns-prefetch" href="//unpkg.com" />
@@ -30,7 +14,7 @@
 		}
 	</style>
 
-<div class="antialiased sans-serif bg-gray-100 h-screen">
+<div class="antialiased bg-gray-900 h-screen">
 	<div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
 		<div class="container mx-auto px-4 py-2 md:py-24">
 			  
@@ -302,5 +286,4 @@
 		}
 	</script>
   </div>
-</body>
-</html>
+{% endblock %}
