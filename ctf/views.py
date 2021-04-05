@@ -12,3 +12,7 @@ def challenges(request):
 
 def calendar(request):
     return render(request, "calendar.html")
+
+
+def listCtf(request):
+    return render(request, "list.html")
