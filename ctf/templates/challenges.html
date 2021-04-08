@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<button class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
 <div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
     <div onclick="displayModal('modal1')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
         <h1 class="font-bold"> title </h1>
@@ -40,16 +41,60 @@
         <h2 class="font-medium"> 50 </h2>
     </div>
 </div>
-<iframe width="50%" height="100%" src="https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
-<div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full justify-center" id="modal1" style="top:64px;">
-    <div class="text-center bg-white border-3 rounded-xl border-green-500 p-4 absolute top-1/4 w-1/2">
+<iframe width="50%" height="95%" src="https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
+<div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full" id="modal1" style="top:64px;">
+    <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2" style="right: 10%">
         <h1 class="font-bold"> title 1 </h1>
         <h2 class="font-medium"> 50 </h2>
-        <p class="text-center text-sm"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras magna est, ultricies
+        <div class="text-sm">
+            <button class="rounded-full bg-green-300 px-4 m-1" >Stegano</button>
+            <button class="rounded-full bg-red-300 px-4 m-1" >Pwn</button>
+            <button class="rounded-full bg-blue-300 px-4 m-1" >Crypto</button>
+        </div>
+        <p class="text-center text-sm mt-2"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras magna est, ultricies
             sit amet justo id, laoreet consequat tellus. Phasellus iaculis erat erat, non vestibulum tellus auctor eu.
             Pellentesque pharetra aliquam turpis a egestas. Phasellus vulputate accumsan tellus, ac vulputate nunc rhoncus
             eget. Pellentesque in mauris nec quam auctor aliquet eget ac purus </p> <br>
-        <button onclick="modalclose('modal1')" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Validate </button>
+        <div class="float-left">
+            <select class="rounded-full" id="users" name="users">
+                <option value="morti">morti</option>
+                <option value="mini">mini</option>
+                <option value="etnarek">etnarek</option>
+                <option value="mickey">mickey</option>
+            </select>
+            <button onclick="modalclose('modal1')" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Notify </button>
+        </div>
+        <button onclick="modalclose('modal1')" class="px-6 py-3 text-white bg-blue-500 active:bg-blue-900 rounded-md float-right"> Validate </button>
+        <button onclick="modalclose('modal1')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
+    </div>
+    <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/4" style="left: 10%;max-height:30%;">
+        <ul class="list overflow-y-auto">
+            <li>
+                <a href="#" style="display:inline-block;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.bmp</div>
+                </a>
+            </li> 
+            <li>
+                <a href="#" style="display:inline-block;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.png</div>
+                </a>
+            </li>
+            <li>
+                <a href="#" style="display:inline-block;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.txt</div>
+                </a>
+            </li>
+        </ul>
+        <input class="mt-2" type="file" id="files" name="files"></input>
     </div>
 </div>
 <div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full justify-center" id="modal2" style="top:64px;">
