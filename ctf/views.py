@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from ctf.models import CTF
+
 
 def challenges(request):
     context = {
@@ -17,6 +19,7 @@ def calendar(request):
 
 def home(request):
     context = {
-        "page_title": "Dashboard"
+        "page_title": "Dashboard",
+        "ctfs": CTF.objects.all()
     }
     return render(request, "home.html", context)
