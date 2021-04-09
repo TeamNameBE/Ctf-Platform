@@ -32,7 +32,7 @@
                     </select>
                     <button onclick="modalclose('modal{{ chall.id }}')" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Notify </button>
                 </div>
-                <button onclick="modalclose('modal{{ chall.id }}')" class="px-6 py-3 text-white bg-blue-500 active:bg-blue-900 rounded-md float-right"> Validate </button>
+                <button onclick="window.location = '{% url "validate_chall" ctf.id chall.id %}'" class="px-6 py-3 text-white bg-blue-500 active:bg-blue-900 rounded-md float-right"> Validate </button>
                 <button onclick="modalclose('modal{{ chall.id }}')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
             </div>
             <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/4" style="left: 10%;max-height:30%;">
