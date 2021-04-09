@@ -34,6 +34,10 @@ class CTF(models.Model):
 
     @property
     def score(self):
+        total = 0
+        for chall in self.challenge_set.filter(validated=True):
+            total += chall.points
+        return total
 
     @property
     def padLink(self):

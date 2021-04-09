@@ -8,7 +8,8 @@ def challenges(request, ctf_id):
     context = {
         "page_title": "Challenges",
         "challenges": Challenge.objects.filter(ctf__id=ctf_id),
-        "users": User.objects.all()
+        "users": User.objects.all(),
+        "ctf": CTF.objects.get(id=ctf_id)
     }
     return render(request, "challenges.html", context)
 
