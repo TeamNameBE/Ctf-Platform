@@ -61,7 +61,10 @@
                         </a>
                     </li>
                 </ul>
-                <input class="mt-2" type="file" id="files" name="files"></input>
+                <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
+                </form>
             </div>
         </div>
     {% empty %}

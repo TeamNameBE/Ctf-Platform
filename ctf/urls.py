@@ -6,5 +6,6 @@ urlpatterns = [
     path("<int:ctf_id>/challenges", views.challenges, name="chal"),
     path("<int:ctf_id>/challenges/<int:chall_id>/", views.assign_user, name="assignUser"),
     path("<int:ctf_id>/challenges/<int:chall_id>/validate", views.validate_chall, name="validate_chall"),
+    path("<int:ctf_id>/challenges/<int:chall_id>/upload", views.upload_file, name="upload_file"),
     path("calendar", views.calendar, name="calendar"),
 ]
