@@ -5,7 +5,7 @@
 <div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
     {% for chall in challenges %}
         <div onclick="displayModal('modal1')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
-            <h1 class="font-bold">{{ chall,name }}</h1>
+            <h1 class="font-bold">{{ chall.name }}</h1>
             <h2 class="font-medium">{{ chall.points }}</h2>
             <div class="text-sm">
                 {% for category in chall.category.all %}
@@ -17,7 +17,11 @@
         <p>Aucun Challenge n'est encore disponible</p>
     {% endfor %}
 </div>
+
+
 <iframe width="50%" height="95%" src="https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
+
+
 <div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full" id="modal1" style="top:64px;">
     <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2" style="right: 10%">
         <h1 class="font-bold"> title 1 </h1>
