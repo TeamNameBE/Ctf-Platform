@@ -52,7 +52,7 @@
             </div>
         </div>
     {% empty %}
-        <p>Aucun Challenge n'est encore disponible</p>
+        <p class="text-white">Aucun Challenge n'est encore disponible</p>
     {% endfor %}
     {% if AddChallenge %}
         <button onclick="displayModal('AddChallenge', '{{ ctf.padLink }}')" class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
