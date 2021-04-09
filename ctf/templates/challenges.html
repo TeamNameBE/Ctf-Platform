@@ -36,30 +36,14 @@
             </div>
             <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/4" style="left: 10%;max-height:30%;">
                 <ul class="list overflow-y-auto">
-                    <li>
-                        <a href="#" style="display:inline-block;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                            <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.bmp</div>
-                        </a>
-                    </li> 
-                    <li>
-                        <a href="#" style="display:inline-block;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.png</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" style="display:inline-block;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">fichier.txt</div>
-                        </a>
-                    </li>
+                    {% for file in chall.challengefile_set.all %}
+                        <li>
+                            <a href="{{file.url}}" style="display:inline-block;">
+                                
+                                <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">{{file}}</div>
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data">
                     {% csrf_token %}

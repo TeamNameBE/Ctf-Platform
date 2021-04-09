@@ -1,10 +1,11 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotAllowed, HttpResponseBadRequest
+from django.contrib import messages
 from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from ctf.models import CTF, Challenge
+from ctf.models import CTF, Challenge, ChallengeFile
 from ctf.forms import ChallengeForm
 
 
@@ -49,6 +50,24 @@ def validate_chall(request, ctf_id, chall_id):
 
 
 @login_required
-def assign_user(self, ctf_id, chall_id):
+def assign_user(request, ctf_id, chall_id):
     # TODO
+    return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
+
+
+@login_required
+def upload_file(request, ctf_id, chall_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["GET"])
+
+    file = request.FILES.get("file", None)
+    print(request.FILES)
+    print(file)
+    if file is None:
+        messages.error(request, "Fichier manquant")
+        return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+    response = ChallengeFile.objects.create(file=file, challenge=get_object_or_404(Challenge, id=chall_id))
+
+    print(response)
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
