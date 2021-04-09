@@ -2,11 +2,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from ctf.models import CTF, Challenge
 from ctf.forms import ChallengeForm
 
 
+@login_required
 def challenges(request, ctf_id):
     if request.method == "POST":
         form = ChallengeForm(request.POST)
@@ -26,16 +28,19 @@ def challenges(request, ctf_id):
     return render(request, "challenges.html", context)
 
 
+@login_required
 def calendar(request):
     context = {"page_title": "Calendar"}
     return render(request, "calendar.html", context)
 
 
+@login_required
 def home(request):
     context = {"page_title": "Dashboard", "ctfs": CTF.objects.all()}
     return render(request, "home.html", context)
 
 
+@login_required
 def validate_chall(request, ctf_id, chall_id):
     challenge = get_object_or_404(Challenge, id=chall_id)
     challenge.validated = True
@@ -43,6 +48,7 @@ def validate_chall(request, ctf_id, chall_id):
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
 
 
+@login_required
 def assign_user(self, ctf_id, chall_id):
     # TODO
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
