@@ -1,4 +1,5 @@
 from pathlib import Path
+import logging
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -15,6 +16,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "mysecretisnevertobefound")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(" ")
+logging.warning("Allowed hosts", ALLOWED_HOSTS)
 
 # Application definition
 INSTALLED_APPS = [
