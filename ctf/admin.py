@@ -10,4 +10,18 @@ class CTFAdmin(admin.ModelAdmin):
     search_fields = ("name", )
 
 
+class ChallengeAdmin(admin.ModelAdmin):
+    list_display = ("name", "points", "validated")
+    ordering = ("id", "name")
+    search_fields = ("name", )
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name", )
+    ordering = ("id", "name")
+    search_fields = ("name", )
+
+
 admin.site.register(models.CTF, CTFAdmin)
+admin.site.register(models.Challenge, ChallengeAdmin)
+admin.site.register(models.Category, CategoryAdmin)
