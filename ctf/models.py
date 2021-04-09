@@ -5,16 +5,6 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 
-CATEGORY = {
-    ("forensic", "forensic"),
-    ("stegano", "stegano"),
-    ("pwn", "pwn"),
-    ("crypto", "crypto"),
-    ("reverse", "reverse"),
-    ("osint", "osint"),
-}
-
-
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username="deleted")[0]
 
@@ -51,7 +41,7 @@ class Challenges(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     points = models.IntegerField(default=0)
-    category = models.CharField(max_length=10, choices=CATEGORY)
+    category = models.ManyToManyField("ctf.Category")
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE)
     validated = models.BooleanField()
     user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
@@ -60,3 +50,8 @@ class Challenges(models.Model):
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
         return super().save(*args, **kwargs)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=32)
+    color = models.CharField(max_length=32, default="bg-green-300")
