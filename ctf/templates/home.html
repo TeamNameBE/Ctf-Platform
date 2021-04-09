@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block content%}
 <div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);">
 
@@ -8,11 +10,17 @@
     <div class="block border-b-2 mt-2">
       <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
       <div class="block bg-white px-4 py-2 m-5 rounded-md">
-        <a href="#">Lien vers la ctf</a> 
+        <a href="#">{{ ctf.name }}</a> 
         <ul class="list-disc list-inside ml-4">
-          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
-          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+          <li><a href="{{ ctf.website }}">{{ ctf.website }}</a></li>
+          <li>{{ ctf.getPadLink }}</li>
+          {% if ctf.is_finished %}
+            <li>Score : {{ ctf.score }}</li>
+          {% elif ctf.is_now %}
+            <li>Score : {{ ctf.score }} - Temps restant: {{ ctf.time_left }}</li>
+          {% else %}
+            <li>{{ ctf.start_date|naturaltime }}</li>
+          {% endif %}
         </ul>
       </div>
     </div>
