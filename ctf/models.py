@@ -40,6 +40,11 @@ class CTF(models.Model):
         return total
 
     @property
+    def ctftime_score(self):
+        # TODO: Check ctftime score value
+        return 0
+
+    @property
     def padLink(self):
         return f"https://hackmd.teamna.me/{self.pad}"
 
@@ -51,7 +56,9 @@ class Challenge(models.Model):
     category = models.ManyToManyField("ctf.Category")
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE)
     validated = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True, blank=True)
+    user = models.ForeignKey(
+        User, on_delete=models.SET(get_sentinel_user), null=True, blank=True
+    )
     pad = models.CharField(max_length=256, null=True)
 
     def save(self, *args, **kwargs):
