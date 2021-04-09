@@ -4,15 +4,25 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
 from ctf.models import CTF, Challenge
+from ctf.forms import ChallengeForm
 
 
 def challenges(request, ctf_id):
+    if request.method == "POST":
+        form = ChallengeForm(request.POST)
+        if form.is_valid:
+            challenge = form.save()
+            challenge.ctf = get_object_or_404(CTF, id=ctf_id)
+            challenge.save()
+
     context = {
         "page_title": "Challenges",
         "challenges": Challenge.objects.filter(ctf__id=ctf_id),
         "users": User.objects.all(),
         "ctf": get_object_or_404(CTF, id=ctf_id),
     }
+    if not context["ctf"].is_finished:
+        context["AddChallenge"] = ChallengeForm()
     return render(request, "challenges.html", context)
 
 
