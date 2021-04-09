@@ -13,7 +13,7 @@
         <a href="{% url 'chal' ctf.id %}">{{ ctf.name }}</a> 
         <ul class="list-disc list-inside ml-4">
           <li><a href="{{ ctf.website }}">{{ ctf.website }}</a></li>
-          <li>{{ ctf.getPadLink }}</li>
+          <li>{{ ctf.padLink }}</li>
           {% if ctf.is_finished %}
             <li>Score : {{ ctf.score }}</li>
           {% elif ctf.is_now %}
