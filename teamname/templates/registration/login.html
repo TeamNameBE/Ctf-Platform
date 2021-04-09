@@ -1,0 +1,38 @@
+{% load static %}
+
+{% load CTF %}
+{% load gravatar %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>{{ page_title }}</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body class="bg-gray-900 leading-normal tracking-normal">
+    <div class="bg-white text-center p-4 rounded-lg w-1/4 justify-center" style="position:absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+        <h2 class="font-bold mb-4">Login</h2>
+        <form method="post" class="w-3/4 text-left" style="display: inline-block;">
+            {% csrf_token %}
+            <label class="block text-left">
+                <span class="text-gray-700">Username:</span>
+                <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" class="form-input mt-1 block w-full rounded-md mb-2">
+            </label>
+            <label class="block">
+                <span class="text-gray-700 text-left">Password:</span>
+                <input type="password" name="password" autocomplete="current-password" required="" id="id_password" class="form-input mt-1 block w-full rounded-md mb-2">
+            </label>
+            <div class="text-center w-100">
+                <button type="submit" class="bg-blue-500 mt-2 px-6 py-3 rounded-full">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
