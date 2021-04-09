@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
-from ctf.models import CTF, Challenges
+from ctf.models import CTF, Challenge
 
 
 def challenges(request, ctf_id):
     context = {
         "page_title": "Challenges",
-        "challenges": Challenges.objects.filter(ctf__id=ctf_id),
+        "challenges": Challenge.objects.filter(ctf__id=ctf_id),
     }
     return render(request, "challenges.html", context)
 

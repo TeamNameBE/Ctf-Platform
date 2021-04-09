@@ -37,14 +37,14 @@ class CTF(models.Model):
         return 0
 
 
-class Challenges(models.Model):
+class Challenge(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     points = models.IntegerField(default=0)
     category = models.ManyToManyField("ctf.Category")
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE)
     validated = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
+    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True, blank=True)
     pad = models.CharField(max_length=256, null=True)
 
     def save(self, *args, **kwargs):
