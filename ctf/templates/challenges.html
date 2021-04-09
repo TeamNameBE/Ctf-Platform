@@ -67,10 +67,43 @@
     {% empty %}
         <p>Aucun Challenge n'est encore disponible</p>
     {% endfor %}
+    {% if AddChallenge %}
+        <button onclick="displayModal('AddChallenge', '{{ ctf.padLink }}')" class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
+        <div class="hidden fixed left-0 justify-center bg-black bg-opacity-70 w-1/2 h-full" id="AddChallenge" style="top:64px;">
+            <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2">
+                <button onclick="modalclose('AddChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
+                <h1 class="font-bold mb-4 mt-2"> Add new challenge </h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <label class="block">
+                        <span class="text-gray-700">Name:</span>
+                        <input type="text" name="name" maxlength="200" required="true" id="id_name" class="rounded-md mb-2">
+                    </label>
+                    <label class="block mt-4">
+                        <span class="text-gray-700">Points:</span>
+                        <input type="number" name="points" value="0" required="true" id="id_points" class="rounded-md mb-2">
+                    </label>
+                    <label class="block mt-4">
+                        <span class="text-gray-700">Description:</span>
+                        <textarea name="description" required="" id="id_description" class="form-textarea mt-1 block w-full" rows="3"></textarea>
+                    </label>
+                    <label class="block mt-4">
+                        <span class="text-gray-700">Category:</span>
+                        <select name="category" required="" id="id_category" multiple="true" class="form-multiselect block w-full mt-1">
+                            {% for x, y in AddChallenge.fields.category.choices %}
+                                <option value="{{ x }}"{% if AddChallenge.fields.category.value == x %} selected{% endif %}>{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <input type="submit" value="Submit" class="mt-4 px-6 py-3 text-white bg-green-700 active:bg-green-900 rounded-md">
+                </form>
+            </div>
+        </div>
+    {% endif %}
 </div>
 
 
-<iframe width="50%" height="95%" src="{{ ctf.getPadLink }}" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
+<iframe width="50%" height="95%" src="{{ ctf.padLink }}" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
 
 <script>
     function displayModal(modal, challengePad) {
