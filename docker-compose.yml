@@ -42,7 +42,7 @@ services:
       - "traefik.http.routers.ctf-secure.rule=Host(`ctf.teamna.me`)"
       - "traefik.http.routers.ctf-secure.tls=true"
       - "traefik.http.routers.ctf-secure.tls.certresolver=http"
-      - "traefik.http.routers.ctf-secure.service=nginx-ctf@docker"
+      - "traefik.http.routers.ctf-secure.service=nginx-ctf-platform@docker"
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
