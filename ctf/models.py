@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
+from django.utils import timezone
+
+
 CATEGORY = {
     ("forensic", "forensic"),
     ("stegano", "stegano"),
@@ -23,9 +26,25 @@ class CTF(models.Model):
     website = models.CharField(max_length=256, null=True)
     pad = models.CharField(max_length=256, null=True)
 
-    def save(args, **kwargs):
+    def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
         return super().save(*args, **kwargs)
+
+    @property
+    def is_finished(self):
+        return timezone.now() > self.end_date
+
+    @property
+    def is_now(self):
+        return self.start_date < timezone.now() < self.end_date
+
+    @property
+    def time_left(self):
+        return self.end_date - timezone.now()
+
+    @property
+    def score(self):
+        return 0
 
 
 class Challenges(models.Model):
@@ -38,6 +57,6 @@ class Challenges(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
     pad = models.TextField(null=True)
 
-    def save(args, **kwargs):
+    def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
         return super().save(*args, **kwargs)
