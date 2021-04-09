@@ -1,18 +1,29 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+
+from ctf.models import CTF, Challenge
 
 
-def home(request):
-    return HttpResponse("Hello")
-
-
-def challenges(request):
-    return render(request, "challenges.html")
+def challenges(request, ctf_id):
+    context = {
+        "page_title": "Challenges",
+        "challenges": Challenge.objects.filter(ctf__id=ctf_id),
+        "users": User.objects.all(),
+        "ctf": CTF.objects.get(id=ctf_id)
+    }
+    return render(request, "challenges.html", context)
 
 
 def calendar(request):
-    return render(request, "calendar.html")
+    context = {
+        "page_title": "Calendar"
+    }
+    return render(request, "calendar.html", context)
 
 
-def listCtf(request):
-    return render(request, "list.html")
+def home(request):
+    context = {
+        "page_title": "Dashboard",
+        "ctfs": CTF.objects.all()
+    }
+    return render(request, "home.html", context)

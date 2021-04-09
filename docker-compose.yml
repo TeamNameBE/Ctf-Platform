@@ -4,14 +4,26 @@ services:
   web:
     build:
       context: ./
-    command: gunicorn main:app -b 0.0.0.0:8000
-    # env_file:
-    #   - ./.env
+      dockerfile: Dockerfile
+    command: gunicorn teamname.wsgi:application -b 0.0.0.0:8000
     volumes:
       - static_volume:/home/site/web/static
       - media_volume:/home/site/web/static/media
     expose:
       - 8000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    networks:
+      - private
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
     networks:
       - private
 
@@ -22,15 +34,15 @@ services:
       - media_volume:/home/site/web/static/media
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.entrypoints=http"
-      - "traefik.http.routers.web.rule=Host(`teamna.me`)"
+      - "traefik.http.routers.ctf.entrypoints=http"
+      - "traefik.http.routers.ctf.rule=Host(`ctf.teamna.me`)"
       - "traefik.http.middlewares.web-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.web.middlewares=web-https-redirect"
-      - "traefik.http.routers.web-secure.entrypoints=https"
-      - "traefik.http.routers.web-secure.rule=Host(`teamna.me`)"
-      - "traefik.http.routers.web-secure.tls=true"
-      - "traefik.http.routers.web-secure.tls.certresolver=http"
-      - "traefik.http.routers.web-secure.service=nginx-teamname@docker"
+      - "traefik.http.routers.ctf.middlewares=web-https-redirect"
+      - "traefik.http.routers.ctf-secure.entrypoints=https"
+      - "traefik.http.routers.ctf-secure.rule=Host(`ctf.teamna.me`)"
+      - "traefik.http.routers.ctf-secure.tls=true"
+      - "traefik.http.routers.ctf-secure.tls.certresolver=http"
+      - "traefik.http.routers.ctf-secure.service=nginx-ctf@docker"
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
@@ -48,5 +60,6 @@ networks:
     external: true
 
 volumes:
+  postgres_data:
   static_volume:
   media_volume:

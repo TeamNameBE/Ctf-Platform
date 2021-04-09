@@ -1,4 +1,6 @@
 {% load static %}
+
+{% load CTF %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +8,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Tailwind CSS Skeleton</title>
+	<title>{{ page_title }}</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
@@ -21,23 +23,28 @@
 			<div class="flex items-center justify-between h-16">
 				<div class="flex items-center">
 					<div class="flex-shrink-0">
-						<a href="{% url 'index' %}">
+						<a href="{% url 'dashboard' %}">
 							<img class="h-16 w-16" src="{% static 'image/sticker.svg' %}" alt="Workflow" />
 						</a>
 					</div>
 					<div class="hidden md:block">
 						<div class="ml-10 flex items-baseline space-x-4">
-							<a href="{% url 'listCtf' %}"
-								class="text-gray-900 hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+							<a href="{% url 'dashboard' %}"
+								class="{% if "Dashboard" in page_title %}bg-blue-700 text-white{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
 
 							<a href="{% url 'calendar' %}"
-								class="text-gray-900 hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+								class="{% if "Calendar" in page_title %}bg-blue-700 text-white{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
 
-							<a href="{% url 'chal' %}"
-								class="bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium">Challenges</a>
+							{% with current_ctf as ctf %}
+							{% if ctf %}
+								<a href="{% url 'chal' %}"
+									class="{% if "Challenges" in page_title %}bg-blue-700 text-white{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium">Challenges</a>
+							{% endif %}
+							{% endwith %}
 
 							<a href="#"
-								class="text-gray-900 hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pads</a>
+								class="{% if "Pads" in page_title %}bg-blue-700 text-white{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium">Pads</a>
 						</div>
 					</div>
 				</div>

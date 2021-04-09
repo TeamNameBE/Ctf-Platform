@@ -1,5 +1,5 @@
 # Team Name
-Source code of the Team Name's website
+Source code of Team Name's collaboration website
 
 ## Installation
 ```
