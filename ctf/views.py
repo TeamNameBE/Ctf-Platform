@@ -3,7 +3,7 @@ from django.shortcuts import render
 from ctf.models import CTF
 
 
-def challenges(request):
+def challenges(request, ctf_id):
     context = {
         "page_title": "Challenges"
     }

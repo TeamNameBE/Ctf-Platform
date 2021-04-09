@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name='dashboard'),
-    path("challenges", views.challenges, name="chal"),
+    path("<int:ctf_id>/challenges", views.challenges, name="chal"),
     path("calendar", views.calendar, name='calendar'),
 ]
