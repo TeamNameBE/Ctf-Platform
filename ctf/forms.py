@@ -6,7 +6,3 @@ class ChallengeForm(forms.ModelForm):
     class Meta:
         model = Challenge
         fields = ["name", "points", "description", "category"]
-
-
-class UploadForm(forms.Form):
-    file = forms.FileField()
