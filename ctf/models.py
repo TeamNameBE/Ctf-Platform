@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 
 from django.utils import timezone
 
+import ctf.utils as utils
+
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username="deleted")[0]
@@ -73,3 +75,8 @@ class Challenge(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32)
     color = models.CharField(max_length=32, default="bg-green-300")
+
+
+class ChallengeFile(models.Model):
+    challenge = models.ForeignKey("ctf.Challenge", on_delete=models.CASCADE)
+    file = models.FileField(upload_to=utils.chall_file_upload)
