@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
 from django.utils import timezone
+from colorfield.fields import ColorField
 
 import ctf.utils as utils
 
@@ -56,11 +57,9 @@ class Challenge(models.Model):
     description = models.TextField()
     points = models.IntegerField(default=0)
     category = models.ManyToManyField("ctf.Category")
-    ctf = models.ForeignKey(CTF, on_delete=models.CASCADE)
-    validated = models.BooleanField()
-    user = models.ForeignKey(
-        User, on_delete=models.SET(get_sentinel_user), null=True, blank=True
-    )
+    ctf = models.ForeignKey(CTF, on_delete=models.CASCADE, null=True)
+    validated = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True, blank=True)
     pad = models.CharField(max_length=256, null=True)
 
     def save(self, *args, **kwargs):
@@ -74,7 +73,10 @@ class Challenge(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
-    color = models.CharField(max_length=32, default="bg-green-300")
+    color = ColorField()
+
+    def __str__(self):
+        return self.name
 
 
 class ChallengeFile(models.Model):
