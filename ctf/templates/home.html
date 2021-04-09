@@ -10,7 +10,7 @@
     <div class="block border-b-2 mt-2">
       <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
       <div class="block bg-white px-4 py-2 m-5 rounded-md">
-        <a href="#">{{ ctf.name }}</a> 
+        <a href="{% url 'chal' ctf.id %}">{{ ctf.name }}</a> 
         <ul class="list-disc list-inside ml-4">
           <li><a href="{{ ctf.website }}">{{ ctf.website }}</a></li>
           <li>{{ ctf.getPadLink }}</li>
