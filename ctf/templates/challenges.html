@@ -4,7 +4,7 @@
 <button class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
 <div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
     {% for chall in challenges %}
-        <div onclick="displayModal('modal{{ chall.id }}')" class="text-center {% if chall.validated %}bg-green-400{% else %}bg-gray-100{% endif %} border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
+        <div onclick="displayModal('modal{{ chall.id }}', '{{ chall.padLink }}')" class="text-center {% if chall.validated %}bg-green-400{% else %}bg-gray-100{% endif %} border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
             <h1 class="font-bold">{{ chall.name }}</h1>
             <h2 class="font-medium">{{ chall.points }}</h2>
             <div class="text-sm">
@@ -71,21 +71,21 @@
 </div>
 
 
-<iframe width="50%" height="95%" src="https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
+<iframe width="50%" height="95%" src="{{ ctf.getPadLink }}" frameborder="0" style="position:absolute;right:0;top:64px;" id="LePad"></iframe>
 
 <script>
-    function displayModal(modal) {
+    function displayModal(modal, challengePad) {
         var modal = document.getElementById(modal);
         modal.style.display = "flex";
         var frame = document.getElementById("LePad");
-        frame.src = "https://hackmd.teamna.me/xtKpQWGfRG6qw8GR6WqkbQ#";
+        frame.src = challengePad;
     };
 
     function modalclose(modal) {
         var modal = document.getElementById(modal);
         modal.style.display = "none";
         var frame = document.getElementById("LePad");
-        frame.src = "https://hackmd.teamna.me/9a79eA5vR7ucYnUjKIxJEA#";
+        frame.src = "{{ ctf.padLink }}";
     };
 </script>
 {% endblock %}

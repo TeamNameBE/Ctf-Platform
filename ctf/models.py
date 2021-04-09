@@ -34,7 +34,10 @@ class CTF(models.Model):
 
     @property
     def score(self):
-        return 0
+
+    @property
+    def padLink(self):
+        return f"https://hackmd.teamna.me/{self.pad}"
 
 
 class Challenge(models.Model):
@@ -50,6 +53,10 @@ class Challenge(models.Model):
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
         return super().save(*args, **kwargs)
+
+    @property
+    def padLink(self):
+        return f"https://hackmd.teamna.me/{self.pad}"
 
 
 class Category(models.Model):
