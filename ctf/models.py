@@ -51,11 +51,11 @@ class Challenges(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     points = models.IntegerField(default=0)
-    category = models.TextField(choices=CATEGORY)
+    category = models.CharField(max_length=10, choices=CATEGORY)
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE)
-    validate = models.BooleanField()
+    validated = models.BooleanField()
     user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
-    pad = models.TextField(null=True)
+    pad = models.CharField(max_length=256, null=True)
 
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
