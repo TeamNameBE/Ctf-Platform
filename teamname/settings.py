@@ -21,6 +21,7 @@ logging.warning(f"Allowed hosts {ALLOWED_HOSTS}")
 # Application definition
 INSTALLED_APPS = [
     "ctf",
+    "teamname",
     "theme",
     "tailwind",
     "colorfield",
@@ -44,6 +45,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "teamname.urls"
+LOGIN_REDIRECT_URL = "dashboard"
+
 
 TEMPLATES = [
     {
