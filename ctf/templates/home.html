@@ -3,9 +3,7 @@
 {% load humanize %}
 
 {% block content%}
-<div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);">
-
-
+<div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
   {% for ctf in ctfs %}
     <div class="block border-b-2 mt-2">
       <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
