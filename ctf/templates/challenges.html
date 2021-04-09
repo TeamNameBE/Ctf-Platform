@@ -4,7 +4,7 @@
 <button class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
 <div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
     {% for chall in challenges %}
-        <div onclick="displayModal('modal1')" class="text-center bg-gray-100 border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
+        <div onclick="displayModal('modal1')" class="text-center {% if chall.validated %}bg-green-400{% else %}bg-gray-100{% endif %} border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
             <h1 class="font-bold">{{ chall.name }}</h1>
             <h2 class="font-medium">{{ chall.points }}</h2>
             <div class="text-sm">
