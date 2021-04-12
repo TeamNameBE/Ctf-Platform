@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2">
+<div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2 overflow-y-auto" style="height:95vh">
     {% for chall in challenges %}
         <div onclick="displayModal('modal{{ chall.id }}', '{{ chall.padLink }}')" class="text-center {% if chall.validated %}bg-green-400{% else %}bg-gray-100{% endif %} border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
             <h1 class="font-bold">{{ chall.name }}</h1>
@@ -54,7 +54,7 @@
         <p class="text-white">Aucun Challenge n'est encore disponible</p>
     {% endfor %}
     {% if AddChallenge %}
-        <button onclick="displayModal('AddChallenge', '{{ ctf.padLink }}')" class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:5%;"> + add challenge </button>
+        <button onclick="displayModal('AddChallenge', '{{ ctf.padLink }}')" class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:1%;"> + add challenge </button>
         <div class="hidden fixed left-0 justify-center bg-black bg-opacity-70 w-1/2 h-full" id="AddChallenge" style="top:64px;">
             <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2">
                 <button onclick="modalclose('AddChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
