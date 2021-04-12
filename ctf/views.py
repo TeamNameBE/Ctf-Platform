@@ -37,7 +37,7 @@ def calendar(request):
 
 @login_required
 def home(request):
-    context = {"page_title": "Dashboard", "ctfs": CTF.objects.all()}
+    context = {"page_title": "Dashboard", "ctfs": CTF.objects.all().order_by("-start_date")}
     return render(request, "home.html", context)
 
 
