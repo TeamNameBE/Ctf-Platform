@@ -32,18 +32,15 @@ def challenges(request, ctf_id):
 
 @login_required
 def edit_chall(request, ctf_id, chall_id):
+
+    challenge = get_object_or_404(Challenge, id=chall_id)
     if request.method == "POST":
-        form = ChallengeForm(request.POST)
+        form = ChallengeForm(request.POST, instance=challenge)
         if form.is_valid:
-            challenge = Challenge.objects.get(id=chall_id)
-            challenge.name = request.POST['name']
-            challenge.points = request.POST['points']
-            challenge.description = request.POST['description']
-            challenge.category.set(request.POST['category'])
-            challenge.save()
+            challenge = form.save()
         return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
 
-    form = ChallengeForm(instance=Challenge.objects.get(id=chall_id))
+    form = ChallengeForm(instance=challenge)
     context = {
         "EditChallenge": form,
         "ctf_id": ctf_id,
