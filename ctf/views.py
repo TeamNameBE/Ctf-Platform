@@ -32,7 +32,6 @@ def challenges(request, ctf_id):
 
 @login_required
 def edit_chall(request, ctf_id, chall_id):
-
     challenge = get_object_or_404(Challenge, id=chall_id)
     if request.method == "POST":
         form = ChallengeForm(request.POST, instance=challenge)
@@ -66,12 +65,6 @@ def validate_chall(request, ctf_id, chall_id):
     challenge = get_object_or_404(Challenge, id=chall_id)
     challenge.validated = True
     challenge.save()
-    return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
-
-
-@login_required
-def assign_user(request, ctf_id, chall_id):
-    # TODO
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
 
 

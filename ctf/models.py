@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
 from django.utils import timezone
@@ -61,7 +60,6 @@ class Challenge(models.Model):
     category = models.ManyToManyField("ctf.Category")
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE, null=True)
     validated = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True, blank=True)
     pad = models.CharField(max_length=256, null=True)
 
     def save(self, *args, **kwargs):
