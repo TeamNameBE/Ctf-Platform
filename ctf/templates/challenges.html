@@ -24,12 +24,7 @@
                 </div>
                 <p class="text-center text-sm mt-2">{{ chall.description }}</p> <br>
                 <div class="float-left">
-                    <select class="rounded-full" id="users" name="users">
-                        {% for user in users %}
-                            <option value="{{ user.username }}">{{ user.username }}</option>
-                        {% endfor %}
-                    </select>
-                    <button onclick="modalclose('modal{{ chall.id }}')" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Notify </button>
+                    <button onclick="getForm({{ chall.id }})" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Edit </button>
                 </div>
                 <button onclick="window.location = '{% url "validate_chall" ctf.id chall.id %}'" class="px-6 py-3 text-white bg-blue-500 active:bg-blue-900 rounded-md float-right"> Validate </button>
                 <button onclick="modalclose('modal{{ chall.id }}')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
@@ -86,6 +81,8 @@
             </div>
         </div>
     {% endif %}
+    <div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full" id="EditChallenge" style="top:64px;">
+    </div>
 </div>
 
 
@@ -104,6 +101,29 @@
         modal.style.display = "none";
         var frame = document.getElementById("LePad");
         frame.src = "{{ ctf.padLink }}";
+    };
+
+    function getForm(id) {
+        var base_url = "{% url 'chal' ctf.id %}";
+        var url = base_url + "/edit/" + id;
+        fetch(url).then(function (response) {
+                // The API call was successful!
+                return response.text();
+            }).then(function (html) {
+
+                // Convert the HTML string into a document object
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                console.log(doc.documentElement);
+
+                var modal = document.getElementById("EditChallenge");
+                modal.appendChild(doc.documentElement);
+                modal.style.display = "flex";
+
+            }).catch(function (err) {
+                // There was an error
+                console.warn('Something went wrong.', err);
+            });
     };
 </script>
 {% endblock %}

@@ -30,6 +30,26 @@ def challenges(request, ctf_id):
     return render(request, "challenges.html", context)
 
 
+def edit_chall(request, ctf_id, chall_id):
+    if request.method == "POST":
+        form = ChallengeForm(request.POST)
+        if form.is_valid:
+            challenge = Challenge.objects.get(id=chall_id)
+            challenge.name = request.POST['name']
+            challenge.points = request.POST['points']
+            challenge.description = request.POST['description']
+            challenge.category.set(request.POST['category'])
+            challenge.save()
+        return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
+    
+    form = ChallengeForm(instance=Challenge.objects.get(id=chall_id))
+    context = {
+        "EditChallenge": form,
+        "ctf_id": ctf_id,
+        "chall_id": chall_id,
+    }
+    return render(request, "form.html", context)
+
 @login_required
 def calendar(request):
     context = {"page_title": "Calendar"}
