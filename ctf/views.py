@@ -56,7 +56,15 @@ def calendar(request):
 
 @login_required
 def home(request):
-    context = {"page_title": "Dashboard", "ctfs": CTF.objects.all().order_by("-start_date")}
+    current_ctfs = []
+    other_ctfs = []
+    for ctf in CTF.objects.all().order_by("-start_date"):
+        if ctf.is_now:
+            current_ctfs.append(ctf)
+        else:
+            other_ctfs.append(ctf)
+
+    context = {"page_title": "Dashboard", "current_ctf": current_ctfs, "ctfs": other_ctfs}
     return render(request, "home.html", context)
 
 
