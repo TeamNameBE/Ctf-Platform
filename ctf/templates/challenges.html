@@ -114,7 +114,6 @@
                 // Convert the HTML string into a document object
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(html, 'text/html');
-                console.log(doc.documentElement);
 
                 var modal = document.getElementById("EditChallenge");
                 modal.appendChild(doc.documentElement);
