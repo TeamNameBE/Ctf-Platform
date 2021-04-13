@@ -5,7 +5,7 @@
 
 {% block content%}
 <div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
-    <div class="border-white border-b-4 mb-2 bg-gray-500">
+    <div class="border-white border-b-4 mb-2 bg-gray-500 px-40">
         {% current_ctf as ctf %}
         <div class="block border-b-2 mt-2">
             <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
