@@ -21,7 +21,7 @@ def challenges(request, ctf_id):
 
     context = {
         "page_title": "Challenges",
-        "challenges": Challenge.objects.filter(ctf__id=ctf_id),
+        "challenges": Challenge.objects.filter(ctf__id=ctf_id).order_by('validated', 'name'),
         "users": User.objects.all(),
         "ctf": get_object_or_404(CTF, id=ctf_id),
     }
