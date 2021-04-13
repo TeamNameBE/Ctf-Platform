@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% load humanize %}
+{% load CTF %}
 
 {% block content%}
 <div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
     <div class="border-white border-b-4 mb-2 bg-gray-500">
-        {% for ctf in current_ctf %}
-            <div class="block border-b-2 mt-2">
-                <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
-                <div class="block bg-white px-4 py-2 m-5 rounded-md">
-                    <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
-                        <li>Score : {{ ctf.score }} - Temps restant: {{ ctf.time_left }}</li>
-                    </ul>
-                </div>
+        {% current_ctf as ctf %}
+        <div class="block border-b-2 mt-2">
+            <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
+            <div class="block bg-white px-4 py-2 m-5 rounded-md">
+                <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
+                <ul class="list-disc list-inside ml-4">
+                    <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
+                    <li>Score : {{ ctf.score }} - Temps restant: {{ ctf.time_left|date:"d/m/Y H:i" }}</li>
+                </ul>
             </div>
-        {% endfor %}
+        </div>
     </div>
 
     {% for ctf in ctfs %}
