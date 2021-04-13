@@ -7,6 +7,8 @@ from colorfield.fields import ColorField
 
 import ctf.utils as utils
 
+from teamname.settings import HACKMD_ROOT_URL
+
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username="deleted")[0]
@@ -49,7 +51,7 @@ class CTF(models.Model):
 
     @property
     def padLink(self):
-        return f"https://hackmd.teamna.me/{self.pad}"
+        return f"{HACKMD_ROOT_URL}{self.pad}"
 
 
 class Challenge(models.Model):
@@ -68,7 +70,7 @@ class Challenge(models.Model):
 
     @property
     def padLink(self):
-        return f"https://hackmd.teamna.me/{self.pad}"
+        return f"{HACKMD_ROOT_URL}{self.pad}"
 
 
 class Category(models.Model):

@@ -17,6 +17,7 @@ def challenges(request, ctf_id):
             challenge = form.save()
             challenge.ctf = get_object_or_404(CTF, id=ctf_id)
             challenge.save()
+        return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
 
     context = {
         "page_title": "Challenges",
