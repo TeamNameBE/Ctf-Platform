@@ -14,5 +14,6 @@ pip install -r requirements.txt
 
 ## Running a test server
 ```
+export DEBUG=1
 ./manage.py runserver
 ```
