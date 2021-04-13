@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseNotAllowed, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseNotAllowed
 from django.contrib import messages
 from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
@@ -30,6 +30,7 @@ def challenges(request, ctf_id):
     return render(request, "challenges.html", context)
 
 
+@login_required
 def edit_chall(request, ctf_id, chall_id):
     if request.method == "POST":
         form = ChallengeForm(request.POST)
@@ -41,7 +42,7 @@ def edit_chall(request, ctf_id, chall_id):
             challenge.category.set(request.POST['category'])
             challenge.save()
         return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))
-    
+
     form = ChallengeForm(instance=Challenge.objects.get(id=chall_id))
     context = {
         "EditChallenge": form,
@@ -49,6 +50,7 @@ def edit_chall(request, ctf_id, chall_id):
         "chall_id": chall_id,
     }
     return render(request, "form.html", context)
+
 
 @login_required
 def calendar(request):
