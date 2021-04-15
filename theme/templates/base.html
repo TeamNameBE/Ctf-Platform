@@ -231,10 +231,6 @@
 				onBefore: function($anchor, $container) {
 					var current = document.getElementsByClassName('current')[0].getAttribute('data-target'),
 						target = $anchor.data('target');
-					current = current ? current : 0;
-					target = target ? target : 0;
-					console.log(current);
-					console.log(target);
 					if (current == target) {
 						transition = 'fade';
 					} else if (current < target) {
