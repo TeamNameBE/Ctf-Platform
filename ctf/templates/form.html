@@ -1,7 +1,7 @@
 <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2" style="left:50%;margin-right: -50%;transform: translate(-50%, 0%);">
     <button onclick="modalclose('EditChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
     <h1 class="font-bold mb-4 mt-2"> Edit challenge </h1>
-    <form method="post" action="{% url 'editchall' ctf_id chall_id %}">
+    <form class="no-smoothState" method="post" action="{% url 'editchall' ctf_id chall_id %}">
         {% csrf_token %}
         <label class="block">
             <span class="text-gray-700">Name:</span>
