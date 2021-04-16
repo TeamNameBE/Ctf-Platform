@@ -5,4 +5,4 @@ from ctf.models import Challenge
 class ChallengeForm(forms.ModelForm):
     class Meta:
         model = Challenge
-        fields = ["name", "points", "description", "category"]
+        fields = ["name", "points", "description", "category" , "pad"]

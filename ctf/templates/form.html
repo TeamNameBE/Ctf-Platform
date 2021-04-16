@@ -23,6 +23,10 @@
                 {% endfor %}
             </select>
         </label>
+        <label class="block mt-4">
+            <span class="text-gray-700">ID du pad:</span>
+            <input type="text" name="pad" value="{{ EditChallenge.pad.value }}" maxlength="200" required="true" id="pad" class="rounded-md mb-2">
+        </label>
         <input type="submit" value="Submit" class="mt-4 px-6 py-3 text-white bg-green-700 active:bg-green-900 rounded-md">
     </form>
 </div>
