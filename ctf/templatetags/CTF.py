@@ -9,3 +9,4 @@ def current_ctf():
     for ctf in CTF.objects.all():
         if ctf.is_now:
             return ctf
+    return False
