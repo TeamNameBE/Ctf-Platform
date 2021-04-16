@@ -60,7 +60,7 @@ class Challenge(models.Model):
     category = models.ManyToManyField("ctf.Category")
     ctf = models.ForeignKey(CTF, on_delete=models.CASCADE, null=True)
     validated = models.BooleanField(default=False)
-    pad = models.CharField(max_length=256, null=True)
+    pad = models.CharField(max_length=256, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
