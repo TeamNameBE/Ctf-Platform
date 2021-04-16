@@ -39,7 +39,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data">
+                <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data" class="no-smoothState">
                     {% csrf_token %}
                     <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
                 </form>
@@ -54,7 +54,7 @@
             <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2">
                 <button onclick="modalclose('AddChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
                 <h1 class="font-bold mb-4 mt-2"> Add new challenge </h1>
-                <form method="post">
+                <form method="post" class="no-smoothState">
                     {% csrf_token %}
                     <label class="block">
                         <span class="text-gray-700">Name:</span>
