@@ -5,25 +5,26 @@
 {% load timeUtils %}
 
 {% block content%}
-<div class="space-y-4 px-36 py-10 w-3/4" style="position: absolute;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
-    {% current_ctf as ctf %}
-    {% if ctf %}
-        <div class="border-white border-b-4 mb-2 bg-gray-500 px-40">
-            <div class="block border-b-2 mt-2">
-                <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
-                <div class="block bg-white px-4 py-2 m-5 rounded-md">
-                    <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
-                    
-                    {% timeUntil ctf.end_date as timeLeft %}
-                    <ul class="list-disc list-inside ml-4">
-                        <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
-                        <li>Score : {{ ctf.score }} - Temps restant: {{ timeLeft }} </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    {% endif %}
 
+{% current_ctf as ctf %}
+{% if ctf %}
+<div class="w-screen bg-blue-700 bg-opacity-50">
+    <div class="px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
+        <h1 class="text-white"> Current Ctf </h1>
+        <div class="block bg-white px-4 py-2 m-5 rounded-md">
+            <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
+
+            {% timeUntil ctf.end_date as timeLeft %}
+            <ul class="list-disc list-inside ml-4">
+                <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
+                <li>Score : {{ ctf.score }} - Temps restant: {{ timeLeft }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="space-y-4 px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
     {% for ctf in ctfs %}
         <div class="block border-b-2 mt-2">
             <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
