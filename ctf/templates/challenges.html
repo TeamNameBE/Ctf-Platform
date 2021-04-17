@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2 overflow-y-auto">
+<div class="px-36 py-10 grid grid-cols-3 gap-4 w-1/2 overflow-y-auto" style="max-height: 95vh;">
     {% for chall in challenges %}
         <div onclick="displayModal('modal{{ chall.id }}', '{{ chall.padLink }}')" class="text-center {% if chall.validated %}bg-green-400{% else %}bg-gray-100{% endif %} border-4 rounded-xl border-blue-500 p-4 hover:bg-blue-300">
             <h1 class="font-bold">{{ chall.name }}</h1>
