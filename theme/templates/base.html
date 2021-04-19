@@ -40,10 +40,13 @@
 								<a href="{% url 'calendar' %}"
 									class="{% if "Calendar" in page_title %}bg-blue-700 text-white current{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium" data-target="1">Calendar</a>
 
-								{% current_ctf as ctf %}
-								{% if ctf %}
-									<a href="{% url 'chal' ctf.id %}"
+								{% current_ctf as current_ctf %}
+								{% if current_ctf %}
+									<a href="{% url 'chal' current_ctf.id %}"
 										class="{% if "Challenges" in page_title %}bg-blue-700 text-white current{% else %}text-gray-900 hover:bg-blue-300 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium" data-target="2">Challenges</a>
+								{% elif "Challenges" in page_title %}
+									<a href="{% url 'chal' ctf.id %}"
+										class="bg-blue-700 text-white current px-3 py-2 rounded-md text-sm font-medium" data-target="2">Challenges</a>
 								{% endif %}
 
 								<a href="#"
