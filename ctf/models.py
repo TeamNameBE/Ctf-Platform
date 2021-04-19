@@ -19,6 +19,7 @@ class CTF(models.Model):
     end_date = models.DateTimeField()
     website = models.CharField(max_length=256, null=True)
     pad = models.CharField(max_length=256, null=True)
+    rating = models.FloatField(default=50)
 
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
@@ -42,6 +43,17 @@ class CTF(models.Model):
         for chall in self.challenge_set.filter(validated=True):
             total += chall.points
         return total
+
+    @property
+    def color(self):
+        if self.rating >= 75:
+            return 'red'
+        elif self.rating >= 50:
+            return 'yellow'
+        elif self.rating >= 25:
+            return 'green'
+        else:
+            return 'blue'
 
     @property
     def ctftime_score(self):
