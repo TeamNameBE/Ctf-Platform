@@ -64,6 +64,9 @@ class CTF(models.Model):
     def padLink(self):
         return f"{HACKMD_ROOT_URL}{self.pad}"
 
+    def __str__(self):
+        return self.name
+
 
 class Challenge(models.Model):
     name = models.CharField(max_length=200)
@@ -81,6 +84,9 @@ class Challenge(models.Model):
     @property
     def padLink(self):
         return f"{HACKMD_ROOT_URL}{self.pad}"
+
+    def __str__(self):
+        return f"{self.name} - {self.ctf.name}"
 
 
 class Category(models.Model):
