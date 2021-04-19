@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "theme",
     "tailwind",
     "colorfield",
+    "crispy_forms",
     'django_extensions',
     "django.contrib.admin",
     "django.contrib.auth",

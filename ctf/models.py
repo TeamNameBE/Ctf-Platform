@@ -19,6 +19,7 @@ class CTF(models.Model):
     end_date = models.DateTimeField()
     website = models.CharField(max_length=256, null=True)
     pad = models.CharField(max_length=256, null=True)
+    rating = models.FloatField(default=50)
 
     def save(self, *args, **kwargs):
         # Create the pad here if it does not exist
@@ -44,6 +45,17 @@ class CTF(models.Model):
         return total
 
     @property
+    def color(self):
+        if self.rating >= 75:
+            return 'red'
+        elif self.rating >= 50:
+            return 'yellow'
+        elif self.rating >= 25:
+            return 'green'
+        else:
+            return 'blue'
+
+    @property
     def ctftime_score(self):
         # TODO: Check ctftime score value
         return 0
@@ -51,6 +63,9 @@ class CTF(models.Model):
     @property
     def padLink(self):
         return f"{HACKMD_ROOT_URL}{self.pad}"
+
+    def __str__(self):
+        return self.name
 
 
 class Challenge(models.Model):
@@ -69,6 +84,9 @@ class Challenge(models.Model):
     @property
     def padLink(self):
         return f"{HACKMD_ROOT_URL}{self.pad}"
+
+    def __str__(self):
+        return f"{self.name} - {self.ctf.name}"
 
 
 class Category(models.Model):

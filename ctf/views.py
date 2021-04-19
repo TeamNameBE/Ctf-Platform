@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from ctf.models import CTF, Challenge, ChallengeFile
-from ctf.forms import ChallengeForm
+from ctf.forms import ChallengeForm, CTForm
 
 
 @login_required
@@ -50,7 +50,11 @@ def edit_chall(request, ctf_id, chall_id):
 
 @login_required
 def calendar(request):
-    context = {"page_title": "Calendar"}
+    context = {
+        "page_title": "Calendar",
+        "events": CTF.objects.all(),
+        "form": CTForm(),
+    }
     return render(request, "calendar.html", context)
 
 
