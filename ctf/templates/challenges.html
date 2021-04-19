@@ -33,7 +33,7 @@
                 <ul class="list overflow-y-auto">
                     {% for file in chall.challengefile_set.all %}
                         <li>
-                            <a href="/media/{{ file }}" style="display:inline-block;">
+                            <a class="no-smoothState" href="/media/{{ file }}" style="display:inline-block;">
                                 <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">{{ file }}</div>
                             </a>
                         </li>
