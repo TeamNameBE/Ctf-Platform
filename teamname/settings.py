@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "colorfield",
     "debug_toolbar",
     "crispy_forms",
+    "crispy_bootstrap4",
     'django_extensions',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -119,7 +120,7 @@ TIME_ZONE = "Europe/Brussels"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

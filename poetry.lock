@@ -112,6 +112,22 @@ files = [
 ]
 
 [[package]]
+name = "crispy-bootstrap4"
+version = "2022.1"
+description = "Bootstrap4 template pack for django-crispy-forms"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "crispy-bootstrap4-2022.1.tar.gz", hash = "sha256:f18386c4d96180c1bb1212487d6e8f5a3dd1a9bb58d3032183973d4d130b55f9"},
+    {file = "crispy_bootstrap4-2022.1-py3-none-any.whl", hash = "sha256:5241ab1dc2188c95560aa786439bcbedec7416e6b0f5a52dded82380810367ec"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+django-crispy-forms = ">=1.14.0"
+
+[[package]]
 name = "dill"
 version = "0.3.6"
 description = "serialize all of python"
@@ -706,4 +722,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "97317b0ad0cc4cad2b29f5bed093b406cd87a0e57c1b66a004eba43e8fce652f"
+content-hash = "df93395b10def9186ccbcb2a926b17044a79f8cde84dcd67012a933592162f31"
