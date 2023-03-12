@@ -59,12 +59,6 @@ def calendar(request):
 
 
 @login_required
-def home(request):
-    context = {"page_title": "Dashboard", "ctfs": CTF.objects.all().order_by("-start_date")}
-    return render(request, "home.html", context)
-
-
-@login_required
 def validate_chall(request, ctf_id, chall_id):
     challenge = get_object_or_404(Challenge, id=chall_id)
     challenge.validated = True
