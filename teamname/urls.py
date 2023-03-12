@@ -10,5 +10,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("ctf/", include("ctf.urls")),
     path("", views.home, name="dashboard"),
+    path("calendar/", views.calendar, name="calendar"),
     path('__debug__/', include('debug_toolbar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
