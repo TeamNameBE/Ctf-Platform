@@ -25,8 +25,8 @@ def challenges(request, ctf_id):
         "users": User.objects.all(),
         "ctf": get_object_or_404(CTF, id=ctf_id),
     }
-    if not context["ctf"].is_finished:
-        context["AddChallenge"] = ChallengeForm()
+    # if not context["ctf"].is_finished:
+    context["AddChallenge"] = ChallengeForm()
     return render(request, "challenges.html", context)
 
 

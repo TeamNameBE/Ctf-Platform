@@ -1,0 +1,39 @@
+<div class="modal fade" id="ChallengeModal{{chall.id}}" tabindex="-1" role="dialog" aria-labelledby="ChallengeModal{{chall.id}}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{chall.id}}">{{ chall.name }} <small>{{ chall.points }}</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-sm row justify-content-center">
+                    {% for category in chall.category.all %}
+                        <button class="rounded-full {{ category.color }} px-4 m-1" >{{ category.name }}</button>
+                    {% endfor %}
+                </div>
+                <p>{{ chall.description }}</p>
+                <h3>Files</h3>
+                <ul class="list overflow-y-auto">
+                    {% for file in chall.challengefile_set.all %}
+                        <li>
+                            <a class="no-smoothState" href="/media/{{ file }}" style="display:inline-block;">
+                                <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">{{ file }}</div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data" class="no-smoothState">
+                    {% csrf_token %}
+                    <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="window.location = '{% url "validate_chall" ctf.id chall.id %}'" class="px-6 py-3 text-white bg-blue-500 active:bg-blue-900 rounded-md float-right"> Validate </button>
+                <button onclick="getForm({{ chall.id }})" class="px-6 py-3 text-white bg-blue-700 active:bg-blue-900 rounded-md"> Edit </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
