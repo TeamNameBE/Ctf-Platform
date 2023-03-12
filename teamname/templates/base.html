@@ -93,7 +93,7 @@
     <div class="container">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-primary {% if message.tags %} {{ message.tags }} {% endif %}" role="alert">
+                <div class="alert alert-primary alert-dismissible fade show {% if message.tags %} {{ message.tags }} {% endif %}" role="alert">
                     {{ message }}
                 </div>
             {% endfor %}

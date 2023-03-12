@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load CTF %}
+{% load timeUtils %}
+
+{% block content%}
+    {% current_ctf as current_ctf %}
+    {% if current_ctf %}
+        <div class="w-screen bg-blue-700 bg-opacity-50">
+            <div class="px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
+                <h1 class="text-white"> Current Ctf </h1>
+                <div class="block bg-white px-4 py-2 m-5 rounded-md">
+                    <a href="{% url 'chal' current_ctf.id %}" class="text-blue-600 underline">{{ current_ctf.name }}</a>
+
+                    {% timeUntil current_ctf.end_date as timeLeft %}
+                    <ul class="list-disc list-inside ml-4">
+                        <li><a href="{{ current_ctf.website }}" class="text-blue-600 underline">{{ current_ctf.website }}</a></li>
+                        <li>Score : {{ current_ctf.score }} - Temps restant: {{ timeLeft }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if ctfs %}
+        <div class="card-group">
+            {% for ctf in ctfs %}
+                <div class="card" style="width: 18rem;max-width: 18rem;">
+                    {% if ctf.image %}
+                        <img src="..." class="card-img-top" alt="ctf's image">
+                    {% else %}
+                        <img src="https://placekitten.com/360/180" class="card-img-top" alt="default image">
+                    {% endif %}
+                        <div class="card-body">
+                        <h5 class="card-title">{{ ctf.name }}</h5>
+                        <p class="card-text">{{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }}</p>
+                        <a href="{{ ctf.website }}">{{ ctf.website }}</a>
+                        {% if ctf.is_finished %}
+                            <p>Score : {{ ctf.score }}</p>
+                        {% else %}
+                            <p>{{ ctf.start_date|naturaltime }}</p>
+                        {% endif %}
+                        <a href="{% url 'chal' ctf.id %}" class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="position-relative">
+            <div class="position-absolute top-50 start-50 translate-middle">
+                Aucune CTF n'existe pour l'instant
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
