@@ -16,14 +16,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "mysecretisnevertobefound")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(" ")
-logging.warning(f"Allowed hosts {ALLOWED_HOSTS}")
+logging.info(f"Allowed hosts {ALLOWED_HOSTS}")
 
 # Application definition
 INSTALLED_APPS = [
     "ctf",
     "teamname",
-    "theme",
-    "tailwind",
     "colorfield",
     "crispy_forms",
     'django_extensions',
@@ -68,7 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "teamname.wsgi.application"
 
-ADMINS = (("Minigrimo", "grimauflorent@gmail.com"),)
+ADMINS = (("Minigrim0", "grimauflorent@gmail.com"),)
 
 APPEND_SLASH = True
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
@@ -121,11 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "theme/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "teamname/assets"),)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-TAILWIND_APP_NAME = "theme"
-
 HACKMD_ROOT_URL = os.environ.get("HACKMDROOT", "127.0.0.1/")
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
