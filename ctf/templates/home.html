@@ -5,47 +5,46 @@
 {% load timeUtils %}
 
 {% block content%}
-
-{% current_ctf as current_ctf %}
-{% if current_ctf %}
-<div class="w-screen bg-blue-700 bg-opacity-50">
-    <div class="px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
-        <h1 class="text-white"> Current Ctf </h1>
-        <div class="block bg-white px-4 py-2 m-5 rounded-md">
-            <a href="{% url 'chal' current_ctf.id %}" class="text-blue-600 underline">{{ current_ctf.name }}</a>
-
-            {% timeUntil current_ctf.end_date as timeLeft %}
-            <ul class="list-disc list-inside ml-4">
-                <li><a href="{{ current_ctf.website }}" class="text-blue-600 underline">{{ current_ctf.website }}</a></li>
-                <li>Score : {{ current_ctf.score }} - Temps restant: {{ timeLeft }}</li>
-            </ul>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<div class="space-y-4 px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
-    {% for ctf in ctfs %}
-        <div class="block border-b-2 mt-2">
-            <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
+    {% current_ctf as current_ctf %}
+    {% if current_ctf %}
+    <div class="w-screen bg-blue-700 bg-opacity-50">
+        <div class="px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
+            <h1 class="text-white"> Current Ctf </h1>
             <div class="block bg-white px-4 py-2 m-5 rounded-md">
-                <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
+                <a href="{% url 'chal' current_ctf.id %}" class="text-blue-600 underline">{{ current_ctf.name }}</a>
+
+                {% timeUntil current_ctf.end_date as timeLeft %}
                 <ul class="list-disc list-inside ml-4">
-                    <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
-                    {% if ctf.is_finished %}
-                        <li>Score : {{ ctf.score }}</li>
-                    {% else %}
-                        <li>{{ ctf.start_date|naturaltime }}</li>
-                    {% endif %}
+                    <li><a href="{{ current_ctf.website }}" class="text-blue-600 underline">{{ current_ctf.website }}</a></li>
+                    <li>Score : {{ current_ctf.score }} - Temps restant: {{ timeLeft }}</li>
                 </ul>
             </div>
         </div>
-    {% empty %}
-        <div class="block border-b-2 mt-2">
-            <div class="block bg-white px-4 py-2 m-5 rounded-md">
-                <a href="#">Aucune CTF n'existe pour l'instant</a>
+    </div>
+    {% endif %}
+
+    <div class="space-y-4 px-36 py-10 w-3/4" style="position: relative;left: 50%;margin-right: -50%;transform: translate(-50%, 0%);z-index: 0;">
+        {% for ctf in ctfs %}
+            <div class="block border-b-2 mt-2">
+                <span class="text-white"> {{ ctf.start_date|date:"d/m/Y" }} - {{ ctf.end_date|date:"d/m/Y" }} </span>
+                <div class="block bg-white px-4 py-2 m-5 rounded-md">
+                    <a href="{% url 'chal' ctf.id %}" class="text-blue-600 underline">{{ ctf.name }}</a>
+                    <ul class="list-disc list-inside ml-4">
+                        <li><a href="{{ ctf.website }}" class="text-blue-600 underline">{{ ctf.website }}</a></li>
+                        {% if ctf.is_finished %}
+                            <li>Score : {{ ctf.score }}</li>
+                        {% else %}
+                            <li>{{ ctf.start_date|naturaltime }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% empty %}
+            <div class="block border-b-2 mt-2">
+                <div class="block bg-white px-4 py-2 m-5 rounded-md">
+                    <a href="#">Aucune CTF n'existe pour l'instant</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
