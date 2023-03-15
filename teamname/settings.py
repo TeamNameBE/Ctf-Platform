@@ -2,21 +2,30 @@ from pathlib import Path
 import logging
 import os
 
+import coloredlogs
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, "mysecretisnevertobefound"),
+    LOGLEVEL=(str, "INFO"),
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+coloredlogs.install(level=env("LOGLEVEL"))
+logger = logging.getLogger("CTF.web")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "mysecretisnevertobefound")
+DEBUG = env("DEBUG") is True
+SECRET_KEY = env("SECRET_KEY")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="127.0.0.1").split(",")
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
+logger.info(f"Allowed hosts {ALLOWED_HOSTS}")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "0") == "1"
-
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(" ")
-logging.info(f"Allowed hosts {ALLOWED_HOSTS}")
+if DEBUG:
+    logger.warning("The application is running in debug mode")
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -30,7 +39,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",
     "crispy_bootstrap4",
-    'django_extensions',
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -53,7 +62,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "teamname.urls"
 LOGIN_REDIRECT_URL = "dashboard"
-
 
 TEMPLATES = [
     {
@@ -80,18 +88,9 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
-    }
+    "default": env.db_url("DATABASE_URL", default=f"sqlite:///{BASE_DIR}/db.sqlite3")
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -111,10 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Europe/Brussels"
 USE_I18N = True
@@ -122,14 +117,12 @@ USE_L10N = True
 USE_TZ = True
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "teamname/assets"),)
+STATIC_ROOT = BASE_DIR / "static/"
+STATICFILES_DIRS = (BASE_DIR / "teamname/assets",)
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = BASE_DIR / "media/"
 
-HACKMD_ROOT_URL = os.environ.get("HACKMDROOT", "127.0.0.1/")
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+HACKMD_ROOT_URL = env("HACKMDROOT", default="127.0.0.1/")
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
