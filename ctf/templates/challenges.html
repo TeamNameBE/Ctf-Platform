@@ -1,62 +1,112 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row">
-        <div class="overflow-y-auto col-6 row-element" style="max-height: 95vh;">
-            {% for chall in challenges %}
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ chall.name }} <span class="card-subtitle mb-2 text-muted">{{ chall.points }}</span></h5>
-                        <div class="text-sm">
-                            {% for category in chall.category.all %}
-                                <span class="badge" style="background-color: {{ category.color }}">{{ category.name }}</span>
-                            {% endfor %}
-                        </div>
-                        <div class="d-flex justify-">
-                            <button type="button" class="mt-2 btn btn-sm btn-primary" data-toggle="modal" data-target="#ChallengeModal{{chall.id}}">See more</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="row ms-4">
+        <div class="overflow-y-auto col-6 row-element mt-3" style="max-height: 95vh;">
 
-                {% include "includes/challenge_modal.html" %}
-            {% empty %}
-                <p class="text-white">Aucun Challenge n'est encore disponible</p>
-            {% endfor %}
-
-            {% if AddChallenge %}
-                <button onclick="displayModal('AddChallenge', '{{ ctf.padLink }}')" class="px-6 py-3 text-white bg-blue-600 active:bg-blue-900 rounded-md" style="position:absolute;bottom:5%;left:1%;"> + add challenge </button>
-                <div class="hidden fixed left-0 justify-center bg-black bg-opacity-70 w-1/2 h-full" id="AddChallenge" style="top:64px;">
-                    <div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2">
-                        <button onclick="modalclose('AddChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
-                        <h1 class="font-bold mb-4 mt-2"> Add new challenge </h1>
-                        <form method="post" class="no-smoothState">
-                            {% csrf_token %}
-                            <label class="block">
-                                <span class="text-gray-700">Name:</span>
-                                <input type="text" name="name" maxlength="200" required="true" id="id_name" class="rounded-md mb-2">
-                            </label>
-                            <label class="block mt-4">
-                                <span class="text-gray-700">Points:</span>
-                                <input type="number" name="points" value="0" required="true" id="id_points" class="rounded-md mb-2">
-                            </label>
-                            <label class="block mt-4">
-                                <span class="text-gray-700">Description:</span>
-                                <textarea name="description" required="" id="id_description" class="form-textarea mt-1 block w-full" rows="3"></textarea>
-                            </label>
-                            <label class="block mt-4">
-                                <span class="text-gray-700">Category:</span>
-                                <select name="category" required="" id="id_category" multiple="true" class="form-multiselect block w-full mt-1">
-                                    {% for x, y in AddChallenge.fields.category.choices %}
-                                        <option value="{{ x }}"{% if AddChallenge.fields.category.value == x %} selected{% endif %}>{{ y }}</option>
+            <div class="accordion" id="accordionExample">
+                {% for chall in challenges %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                {{ chall.name }} <small class="text-muted ms-2 me-2">{{ chall.points }}pts</small>
+                                <div class="text-sm">
+                                    {% for category in chall.category.all %}
+                                        <span class="badge" style="background-color: {{ category.color }}">{{ category.name }}</span>
                                     {% endfor %}
-                                </select>
-                            </label>
-                            <input type="submit" value="Submit" class="mt-4 px-6 py-3 text-white bg-green-700 active:bg-green-900 rounded-md">
-                        </form>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="container" id="Challenge{{chall.id}}-render">
+                                <h4>Description: </h4>
+                                <p>{{ chall.description }}</p>
+
+                                <h3>Files</h3>
+                                <ul class="list overflow-y-auto">
+                                    {% for file in chall.challengefile_set.all %}
+                                        <li>
+                                            <a class="no-smoothState" href="/media/{{ file }}" style="display:inline-block;">
+                                                <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">{{ file }}</div>
+                                            </a>
+                                        </li>
+                                    {% empty %}
+                                        <li>No files</li>
+                                    {% endfor %}
+                                </ul>
+                                <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data" class="no-smoothState">
+                                    {% csrf_token %}
+                                    <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button onclick="window.location = '{% url "validate_chall" ctf.id chall.id %}'" class="btn btn-primary"> Validate </button>
+                                <button onclick="getForm({{ chall.id }})" class="btn btn-danger"> Edit </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="modal fade" id="AddChallengeModal" tabindex="-1" role="dialog" aria-labelledby="AddChallengeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" id="AddChallengeModalLabel">Add new challenge</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" class="no-smoothState">
+                                {% csrf_token %}
+                                <label class="block">
+                                    <span class="text-gray-700">Name:</span>
+                                    <input type="text" name="name" maxlength="200" required="true" id="id_name" class="rounded-md mb-2">
+                                </label>
+                                <label class="block mt-4">
+                                    <span class="text-gray-700">Points:</span>
+                                    <input type="number" name="points" value="0" required="true" id="id_points" class="rounded-md mb-2">
+                                </label>
+                                <label class="block mt-4">
+                                    <span class="text-gray-700">Description:</span>
+                                    <textarea name="description" required="" id="id_description" class="form-textarea mt-1 block w-full" rows="3"></textarea>
+                                </label>
+                                <label class="block mt-4">
+                                    <span class="text-gray-700">Category:</span>
+                                    <select name="category" required="" id="id_category" multiple="true" class="form-multiselect block w-full mt-1">
+                                        {% for x, y in AddChallenge.fields.category.choices %}
+                                            <option value="{{ x }}"{% if AddChallenge.fields.category.value == x %} selected{% endif %}>{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                                <input type="submit" value="Submit" class="mt-4 px-6 py-3 text-white bg-green-700 active:bg-green-900 rounded-md">
+                            </form>
+                        </div>
                     </div>
                 </div>
-            {% endif %}
-            <div class="hidden fixed left-0 bg-black bg-opacity-70 w-1/2 h-full" id="EditChallenge" style="top:64px;">
+            </div>
+
+            <div style="position: absolute;left: 2vw;bottom: 2vh;">
+                <button type="button" class="mt-2 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#AddChallengeModal">➕ Add a Challenge</button>
+            </div>
+
+            <div class="modal fade" id="EditChallengeModal" tabindex="-1" role="dialog" aria-labelledby="EditChallengeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" id="EditChallengeModalLabel">Edit Challenge</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="EditChallengeForm">
+                            prout test
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -72,51 +122,19 @@
     </div>
 
     <script>
-        function displayModal(modal, challengePad) {
-            var modal = document.getElementById(modal);
-            modal.style.display = "flex";
-            var frame = document.getElementById("LePad");
-            frame.src = challengePad;
-        };
-
-        function modalclose(modal) {
-            var modal = document.getElementById(modal);
-            modal.style.display = "none";
-            var frame = document.getElementById("LePad");
-            frame.src = "{{ ctf.padLink }}";
-        };
-
         function getForm(id) {
             var base_url = "{% url 'chal' ctf.id %}";
             var url = base_url + "/edit/" + id;
-            fetch(url).then(function (response) {
-                    // The API call was successful!
-                    return response.text();
-                }).then(function (html) {
-
-                    // Convert the HTML string into a document object
-                    var parser = new DOMParser();
-                    var doc = parser.parseFromString(html, 'text/html');
-
-                    var modal = document.getElementById("EditChallenge");
-                    modal.appendChild(doc.documentElement);
-                    modal.style.display = "flex";
-
-                }).catch(function (err) {
-                    // There was an error
+            fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                    console.log(html)
+                    $("#EditChallengeForm").html(html);
+                    $('#EditChallengeModal').modal('show');
+                })
+            .catch(err => {
                     console.warn('Something went wrong.', err);
                 });
         };
-
-        {% comment %} function fullscreen() {
-            var frame = document.getElementById("LePad");
-            if (frame.width == "50%"){
-                frame.width = "100%";
-            }
-            else {
-                frame.width = "50%";
-            }
-        }; {% endcomment %}
-
     </script>
 {% endblock %}
