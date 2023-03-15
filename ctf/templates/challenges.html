@@ -4,7 +4,7 @@
     <div class="row ms-4">
         <div class="overflow-y-auto col-6 row-element mt-3" style="max-height: 95vh;">
 
-            <div class="accordion" id="accordionExample">
+            <div class="accordion" id="ChallengeAccordion">
                 {% for chall in challenges %}
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
@@ -17,7 +17,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#ChallengeAccordion">
                             <div class="container" id="Challenge{{chall.id}}-render">
                                 <h4>Description: </h4>
                                 <p>{{ chall.description }}</p>
@@ -103,7 +103,6 @@
                             </button>
                         </div>
                         <div class="modal-body" id="EditChallengeForm">
-                            prout test
                         </div>
                     </div>
                 </div>
@@ -128,13 +127,10 @@
             fetch(url)
             .then(response => response.text())
             .then(html => {
-                    console.log(html)
                     $("#EditChallengeForm").html(html);
                     $('#EditChallengeModal').modal('show');
                 })
-            .catch(err => {
-                    console.warn('Something went wrong.', err);
-                });
+            .catch(err => console.warn('Something went wrong.', err));
         };
     </script>
 {% endblock %}
