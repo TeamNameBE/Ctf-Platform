@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -124,5 +125,30 @@ STATICFILES_DIRS = (BASE_DIR / "teamname/assets",)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media/"
 
-HACKMD_ROOT_URL = env("HACKMDROOT", default="127.0.0.1/")
+HACKMD_ROOT_URL = env("HACKMDROOT", default="http://127.0.0.1")
+
+CSP_IMG_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    HACKMD_ROOT_URL,
+    "https://placekitten.com",
+    "https://www.gravatar.com",
+    "https://getbootstrap.com",
+)
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    HACKMD_ROOT_URL,
+    "https://cdn.jsdelivr.net",
+)
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    HACKMD_ROOT_URL,
+    "https://cdn.jsdelivr.net",
+    "http://ajax.googleapis.com",
+)
+CSP_DEFAULT_SRC = ("'self'", "'unsafe-inline'", HACKMD_ROOT_URL)
+logger.info(f"HACKMD_ROOT_URL: {HACKMD_ROOT_URL}")
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
