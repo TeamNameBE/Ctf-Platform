@@ -29,6 +29,11 @@ django-debug-toolbar = "^3.8.1"
 gunicorn = "^20.1.0"
 psycopg2 = "^2.9.5"
 
+
+[tool.poetry.group.tooling.dependencies]
+binwalk = "^2.1.0"
+celery = {extras = ["redis"], version = "^5.2.7"}
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
