@@ -5,7 +5,6 @@ description = "A platform for ctf competitions"
 authors = ["Minigrim0 <grimauflorent@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "ctf_platform"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
