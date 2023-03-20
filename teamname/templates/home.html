@@ -24,7 +24,7 @@
     {% endif %}
 
     {% if ctfs %}
-        <div class="card-group">
+        <div class="card-group p-4">
             {% for ctf in ctfs %}
                 <div class="card" style="width: 18rem;max-width: 18rem;">
                     {% if ctf.image %}
@@ -47,8 +47,8 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="position-relative mt-5">
-            <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="position-relative" style="height: 95vh">
+            <div class="position-absolute top-50 start-50 translate-middle text-white">
                 Aucune CTF n'existe pour l'instant
             </div>
         </div>
