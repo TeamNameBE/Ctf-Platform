@@ -35,6 +35,7 @@ INTERNAL_IPS = [
 INSTALLED_APPS = [
     "ctf",
     "teamname",
+    "files",
     "colorfield",
     "debug_toolbar",
     "crispy_forms",
