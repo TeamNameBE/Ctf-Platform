@@ -23,17 +23,30 @@
                                 <p>{{ chall.description }}</p>
 
                                 <h3>Files</h3>
-                                <ul class="list overflow-y-auto">
+                                <div class="list overflow-y-scroll" style="max-height: 10vh">
                                     {% for file in chall.challengefile_set.all %}
-                                        <li>
-                                            <a class="no-smoothState" href="/media/{{ file }}" style="display:inline-block;">
-                                                <div class="underline text-blue-700" style="display:inline-block;font-size:1.25em;">{{ file }}</div>
+                                        <div class="col-12 row" id="file_div{{ file.id }}">
+                                            <a class="col-8" href="/media/{{ file }}">
+                                                {{ file|truncatechars:30 }}
                                             </a>
-                                        </li>
+                                            <button onclick="deleteFile({{ file.id }})" class="col p-1 btn btn-sm btn-danger">🗑️</button>
+                                            <button onclick="downloadFile({{ file.id }})" class="col p-1 btn btn-sm btn-primary">⬇️</button>
+                                            <div class="col-2">
+                                                {% if file.processed %}
+                                                    <button onclick="" class="col p-1 btn btn-success" disabled>processed ♻️</button>
+                                                {% else %}
+                                                    <button
+                                                        onclick="startProcessing({{ file.id }})"
+                                                        id="process_file{{ file.id }}"
+                                                        class="col p-1 btn btn-sm btn-success"
+                                                    >process ♻️</button>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     {% empty %}
-                                        <li>No files</li>
+                                        <p>No files</p>
                                     {% endfor %}
-                                </ul>
+                                </div>
                                 <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data" class="no-smoothState">
                                     {% csrf_token %}
                                     <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
@@ -132,5 +145,9 @@
                 })
             .catch(err => console.warn('Something went wrong.', err));
         };
+
+        function startProcessing(){
+            console.log("Lol");
+        }
     </script>
 {% endblock %}
