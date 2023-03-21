@@ -30,8 +30,9 @@ psycopg2 = "^2.9.5"
 
 
 [tool.poetry.group.tooling.dependencies]
-binwalk = "^2.1.0"
 celery = {extras = ["redis"], version = "^5.2.7"}
+binwalk = {git = "https://github.com/ReFirmLabs/binwalk"}
+pyexiftool = "^0.5.5"
 
 [build-system]
 requires = ["poetry-core"]
