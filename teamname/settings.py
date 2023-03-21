@@ -24,6 +24,8 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 logger.info(f"Allowed hosts {ALLOWED_HOSTS}")
 
+REDIS_HOST = env("REDIS_HOST", default="localhost")
+
 if DEBUG:
     logger.warning("The application is running in debug mode")
 
