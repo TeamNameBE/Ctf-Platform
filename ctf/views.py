@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from ctf.models import CTF, Challenge, ChallengeFile
+from ctf.models import CTF, Challenge
+from files.models import ChallengeFile
 from ctf.forms import ChallengeForm
 
 
@@ -68,7 +69,5 @@ def upload_file(request, ctf_id, chall_id):
         messages.error(request, "Fichier manquant")
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
-    response = ChallengeFile.objects.create(file=file, challenge=get_object_or_404(Challenge, id=chall_id))
-
-    print(response)
+    ChallengeFile.objects.create(file=file, challenge=get_object_or_404(Challenge, id=chall_id))
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))

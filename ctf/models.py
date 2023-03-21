@@ -4,8 +4,6 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from colorfield.fields import ColorField
 
-import ctf.utils as utils
-
 from teamname.settings import HACKMD_ROOT_URL
 
 
@@ -95,26 +93,3 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class ChallengeFile(models.Model):
-    challenge = models.ForeignKey("ctf.Challenge", on_delete=models.CASCADE)
-    file = models.FileField(upload_to=utils.chall_file_upload)
-
-    def __str__(self):
-        return self.file.name
-
-    """TODO
-        BMP
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        PNG
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        TXT
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:inline-block;">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-    """
