@@ -9,6 +9,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("ctf/", include("ctf.urls")),
+    path("files/", include("files.urls")),
     path("", views.home, name="dashboard"),
     path("calendar/", views.calendar, name="calendar"),
     path('__debug__/', include('debug_toolbar.urls')),
