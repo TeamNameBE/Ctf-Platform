@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 from files.utils import chall_file_upload
 
-from tooling.exiftool import exiftool
+from tooling.tasks import exiftool
 
 
 class ChallengeFile(models.Model):
@@ -31,7 +31,8 @@ class ChallengeFile(models.Model):
     processed = models.BooleanField(default=False)
     file_type = models.CharField(max_length=3, choices=FILE_TYPES, blank=True)
 
-    parent_file = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    parent_file = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True)
 
     def process_file(self):
         """
