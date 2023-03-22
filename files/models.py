@@ -38,6 +38,10 @@ class ChallengeFile(models.Model):
         """
         Extract file type from exiftool and run appropriate tooling on it.
         """
+        conn = redis.Redis(host=settings.REDIS_HOST, port=6379, db=0)
+        conn.set(f"file:{self.id}:status", "queued")
+        conn.set(f"file:{self.id}:filename", self.file.name)
+
         exiftool.delay(self.id)
 
     def __str__(self):
@@ -47,9 +51,4 @@ class ChallengeFile(models.Model):
         return "fas fa-file"
 
     def save(self, *args, **kwargs):
-        new = self.pk is None
         super().save(*args, **kwargs)
-        if new:
-            conn = redis.Redis(host=settings.REDIS_HOST, port=6379, db=0)
-            conn.set(f"file:{self.id}:status", "queued")
-            conn.set(f"file:{self.id}:filename", self.file.name)
