@@ -18,3 +18,9 @@ pip install -r requirements.txt
 export DEBUG=1
 ./manage.py runserver
 ```
+
+A celery worker is also required to run the background tasks:
+
+```bash
+celery -A tooling.app worker -l info
+```
