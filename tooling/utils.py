@@ -56,7 +56,8 @@ def get_task_status(task: str, file_id: int):
     Returns:
         int: The status of the task
     """
-    return conn.get(f"tasks:{task}:{file_id}:status").decode()
+    status = conn.get(f"tasks:{task}:{file_id}:status")
+    return status.decode() if status else None
 
 
 def set_task_data(task: str, file_id: int, data: str):

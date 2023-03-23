@@ -17,6 +17,8 @@ from tooling.utils import (
     get_filename
 )
 import tooling.status as status
+from files.models import ChallengeFile
+
 
 logger = logging.getLogger("[Tooling/tasks]")
 
@@ -43,6 +45,13 @@ def exiftool(file_id: int):
         set_task_data(TASK, file_id, pickle.dumps(e))
         set_task_status(TASK, file_id, status.ERROR)
     logger.info(f"[exiftool-{file_id}] Exiftool finished")
+
+    logger.info(f"[exiftool-{file_id}] Updating file metadata")
+    file = ChallengeFile.objects.get(id=file_id)
+    file.processed = True
+    file.file_type = metadata["File:MIMEType"]
+    file.save()
+    logger.info(f"[exiftool-{file_id}] File metadata updated")
 
     next_tasks.delay(file_id)
 
@@ -81,6 +90,10 @@ def strings(file_id: int):
 
 # Task definitions
 tasks = {
+    "exiftool": {
+        "task": exiftool,
+        "accepts": ["__all__"],
+    },
     "binwalk": {
         "task": binwalk,
         "accepts": ["__all__"],
@@ -112,6 +125,8 @@ def next_tasks(file_id: int):
         tasks_started = []
         logger.info(f"[dispatch-{file_id}] Mime type: {mime_type}")
         for task in tasks:
+            if task == "exiftool":
+                continue
             if mime_type in tasks[task]["accepts"] or "__all__" in tasks[task]["accepts"]:
                 tasks[task]["task"].delay(file_id)
                 tasks_started.append(task)

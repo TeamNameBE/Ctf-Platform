@@ -4,8 +4,6 @@ from django.db import models
 from django.conf import settings
 from files.utils import chall_file_upload
 
-from tooling.tasks import exiftool
-
 
 class ChallengeFile(models.Model):
     FILE_TYPES = (
@@ -41,6 +39,7 @@ class ChallengeFile(models.Model):
         conn = redis.Redis(host=settings.REDIS_HOST, port=6379, db=0)
         conn.set(f"file:{self.id}:status", "queued")
         conn.set(f"file:{self.id}:filename", self.file.name)
+        from tooling.tasks import exiftool
 
         exiftool.delay(self.id)
 
