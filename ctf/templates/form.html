@@ -1,32 +1,48 @@
-<div class="text-center bg-white border-3 rounded-xl p-4 absolute top-1/4 w-1/2" style="left:50%;margin-right: -50%;transform: translate(-50%, 0%);">
-    <button onclick="modalclose('EditChallenge')" class="text-red-600" style="position:absolute;top:5%;right:5%;">X</button>
-    <h1 class="font-bold mb-4 mt-2"> Edit challenge </h1>
-    <form class="no-smoothState" method="post" action="{% url 'editchall' ctf_id chall_id %}">
-        {% csrf_token %}
-        <label class="block">
-            <span class="text-gray-700">Name:</span>
-            <input type="text" name="name" value="{{ EditChallenge.name.value }}" maxlength="200" required="true" id="id_name" class="rounded-md mb-2">
-        </label>
-        <label class="block mt-4">
-            <span class="text-gray-700">Points:</span>
-            <input type="number" name="points" value="{{ EditChallenge.points.value }}" required="true" id="id_points" class="rounded-md mb-2">
-        </label>
-        <label class="block mt-4">
-            <span class="text-gray-700">Description:</span>
-            <textarea name="description" required="" id="id_description" class="form-textarea mt-1 block w-full" rows="3"> {{ EditChallenge.description.value }}</textarea>
-        </label>
-        <label class="block mt-4">
-            <span class="text-gray-700">Category:</span>
-            <select name="category" required="" id="id_category" multiple="true" class="form-multiselect block w-full mt-1">
+<form class="no-smoothState" method="post" action="{% url 'editchall' ctf_id chall_id %}">
+    {% csrf_token %}
+    <div class="row g-3 align-items-center col-12">
+        <div class="col-4">
+            <label class="form-label" for="id_name">Name:</label>
+        </div>
+        <div class="col-8">
+            <input type="text" name="name" value="{{ EditChallenge.name.value }}" maxlength="200" required="true" id="id_name" class="form-control">
+        </div>
+    </div>
+    <div class="row g-3 align-items-center col-12">
+        <div class="col-4">
+            <label class="form-label" for="id_points">Points:</label>
+        </div>
+        <div class="col-8">
+            <input type="number" name="points" value="{{ EditChallenge.points.value }}" required="true" id="id_points" class="form-control">
+        </div>
+    </div>
+    <div class="row g-3 align-items-center col-12">
+        <div class="col-4">
+            <label class="form-label" for="id_description">Description:</label>
+        </div>
+        <div class="col-8">
+            <textarea name="description" required="" id="id_description" class="form-control" rows="3"> {{ EditChallenge.description.value }}</textarea>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center col-12">
+        <div class="col-4">
+            <label class="form-label" for="id_category">Category:</label>
+        </div>
+        <div class="col-8">
+            <select name="category" required="" id="id_category" multiple="true" class="form-control">
                 {% for x, y in EditChallenge.fields.category.choices %}
                     <option value="{{ x }}"{% if EditChallenge.fields.category.value == x %} selected{% endif %}>{{ y }}</option>
                 {% endfor %}
             </select>
-        </label>
-        <label class="block mt-4">
-            <span class="text-gray-700">ID du pad:</span>
-            <input type="text" name="pad" value="{{ EditChallenge.pad.value }}" maxlength="200" required="true" id="pad" class="rounded-md mb-2">
-        </label>
-        <input type="submit" value="Submit" class="mt-4 px-6 py-3 text-white bg-green-700 active:bg-green-900 rounded-md">
-    </form>
-</div>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center col-12">
+        <div class="col-4">
+            <label class="form-label" for="">ID du pad:</label>
+        </div>
+        <div class="col-8">
+            <input type="text" name="pad" value="{{ EditChallenge.pad.value }}" maxlength="200" required="true" id="pad" class="form-control">
+        </div>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>

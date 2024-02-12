@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    command: gunicorn teamname.wsgi:application -b 0.0.0.0:8000
+    volumes:
+      - static_volume:/static
+      - media_volume:/media
+    expose:
+      - 8000
+    env_file:
+      - ./credentials/.env
+    depends_on:
+      - db
+    networks:
+      - private
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./credentials/.db.env
+    networks:
+      - private
+
+  redis:
+    image: redis:5.0.5-alpine
+    networks:
+      - private
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/static
+      - media_volume:/media
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ctf.entrypoints=http"
+      - "traefik.http.routers.ctf.rule=Host(`ctf.teamna.me`)"
+      - "traefik.http.middlewares.web-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.ctf.middlewares=web-https-redirect"
+      - "traefik.http.routers.ctf-secure.entrypoints=https"
+      - "traefik.http.routers.ctf-secure.rule=Host(`ctf.teamna.me`)"
+      - "traefik.http.routers.ctf-secure.tls=true"
+      - "traefik.http.routers.ctf-secure.tls.certresolver=http"
+      - "traefik.http.routers.ctf-secure.service=nginx-ctf-platform@docker"
+      - "traefik.docker.network=traefik-proxy"
+    depends_on:
+      - web
+    networks:
+      - private
+      - public
+      - traefik-proxy
+
+networks:
+  private:
+    driver: overlay
+  public:
+    external: true
+  traefik-proxy:
+    external: true
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

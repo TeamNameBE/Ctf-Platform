@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from ctf.models import CTF, Challenge, ChallengeFile
-from ctf.forms import ChallengeForm, CTForm
+from ctf.models import CTF, Challenge
+from files.models import ChallengeFile
+from ctf.forms import ChallengeForm
 
 
 @login_required
@@ -25,8 +26,8 @@ def challenges(request, ctf_id):
         "users": User.objects.all(),
         "ctf": get_object_or_404(CTF, id=ctf_id),
     }
-    if not context["ctf"].is_finished:
-        context["AddChallenge"] = ChallengeForm()
+    # if not context["ctf"].is_finished:
+    context["AddChallenge"] = ChallengeForm()
     return render(request, "challenges.html", context)
 
 
@@ -49,22 +50,6 @@ def edit_chall(request, ctf_id, chall_id):
 
 
 @login_required
-def calendar(request):
-    context = {
-        "page_title": "Calendar",
-        "events": CTF.objects.all(),
-        "form": CTForm(),
-    }
-    return render(request, "calendar.html", context)
-
-
-@login_required
-def home(request):
-    context = {"page_title": "Dashboard", "ctfs": CTF.objects.all().order_by("-start_date")}
-    return render(request, "home.html", context)
-
-
-@login_required
 def validate_chall(request, ctf_id, chall_id):
     challenge = get_object_or_404(Challenge, id=chall_id)
     challenge.validated = True
@@ -84,7 +69,5 @@ def upload_file(request, ctf_id, chall_id):
         messages.error(request, "Fichier manquant")
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
-    response = ChallengeFile.objects.create(file=file, challenge=get_object_or_404(Challenge, id=chall_id))
-
-    print(response)
+    ChallengeFile.objects.create(file=file, challenge=get_object_or_404(Challenge, id=chall_id))
     return HttpResponseRedirect(reverse("chal", kwargs={"ctf_id": ctf_id}))

@@ -1,0 +1,55 @@
+<div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ chall.pk }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ chall.pk }}" aria-expanded="true" aria-controls="collapse{{ chall.pk }}">
+            {{ chall.name }} <small class="text-muted ms-2 me-2">{{ chall.points }}pts</small>
+            <div class="text-sm">
+                {% for category in chall.category.all %}
+                    <span class="badge" style="background-color: {{ category.color }}">{{ category.name }}</span>
+                {% endfor %}
+            </div>
+        </button>
+    </h2>
+    <div id="collapse{{ chall.pk }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ chall.pk }}" data-bs-parent="#ChallengeAccordion">
+        <div class="container" id="Challenge{{chall.id}}-render">
+            <h4>Description: </h4>
+            <p>{{ chall.description }}</p>
+
+            <h3>Files</h3>
+            <div class="list overflow-y-scroll" style="max-height: 10vh">
+                {% for file in chall.challengefile_set.all %}
+                    <div class="col-12 row mt-1" id="file_div{{ file.id }}">
+                        <a class="col-8" href="{% url "files" file.pk %}">
+                            {{ file|truncatechars:30 }}
+                        </a>
+                        <button onclick="deleteFile({{ file.id }})" class="col p-1 btn btn-sm btn-danger">🗑️</button>
+                        <a href="{% url "files" file.pk %}" class="col p-1 btn btn-sm btn-primary">Details</a>
+                        <a href="/media/{{ file }}" class="col p-1 btn btn-sm btn-primary">⬇️</a>
+                        <div class="col-2">
+                            {% if file.processed %}
+                                <button onclick="" class="col p-1 btn btn-success" disabled>✔️ processed</button>
+                            {% else %}
+                                <button
+                                    onclick="startProcessing({{ file.id }})"
+                                    id="process_file{{ file.id }}"
+                                    class="col p-1 btn btn-sm btn-success"
+                                >♻️ process</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No files</p>
+                {% endfor %}
+            </div>
+            <form action="{% url "upload_file" ctf.id chall.id %}" method="POST" id="uploadForm{{ chall.id }}" enctype="multipart/form-data" class="no-smoothState">
+                {% csrf_token %}
+                <input onchange="$('#uploadForm{{ chall.id }}').submit()" class="mt-2" type="file" id="files" name="file"></input>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button onclick="window.location = '{% url "validate_chall" ctf.id chall.id %}'" class="btn btn-primary"> Validate </button>
+            <button onclick="getForm({{ chall.id }})" class="btn btn-danger"> Edit </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

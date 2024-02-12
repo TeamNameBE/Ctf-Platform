@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container p-2 text-white">
+        <div class="position-absolute">
+            <a href="{% url "chal" object.challenge.pk %}">⬅️ Back</a>
+        </div>
+        <h3 class="text-center text-white">{{ object }}</h3>
+
+        <p>File Type: {{ object.file_type }}</p>
+        <p>File processed: {{ object.file_processed }}</p>
+
+        <h2>Task details</h2>
+        <table class="table text-white">
+            <tr>
+                <th>Task Name</th>
+                <th>Status</th>
+                <th>Accepts</th>
+                <th>Data</th>
+                <th>Re-run</th>
+                <th>Download</th>
+            </tr>
+            {% for task_name, task_data in tasks.items %}
+                {% if task_name != "error" %}
+                    <tr class="table-{{ task_data.color }}">
+                        <td>{{ task_name }}</td>
+                        <td>{{ task_data.status }}</td>
+                        <td>{{ task_data.accepts }}</td>
+                        <td>
+                            {{ task_data.data|truncatechars:50 }}
+                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#file{{ task_name }}Modal">
+                                more
+                            </button>
+                        </td>
+                        <td class="col-1"><button class="btn btn-success">♻</button></td>
+                        <td class="col-1"><a href="/media/{{ object }}" class="btn btn-primary">⬇️</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+
+        <div class="text-black">
+            {% for task_name, task_data in tasks.items %}
+                <div class="modal fade" id="file{{task_name}}Modal" tabindex="-1" aria-labelledby="file{{task_name}}ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="file{{task_name}}ModalLabel">{{ task_name }} data</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ task_data.data }}
+                            </div>
+                            {% comment %} <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
